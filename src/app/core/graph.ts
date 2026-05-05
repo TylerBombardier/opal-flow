@@ -84,23 +84,3 @@ export class Graph {
         this.visiting.clear();
     }
 }
-
-const graph = new Graph();
-
-graph.blocks.set("textInput", {
-    id: "textInput",
-    inputs: [],
-    outputs: [{ id: "out" }],
-    fn: (_, params) => params.value
-});
-
-graph.blocks.set("uppercase", {
-    id: "uppercase",
-    inputs: [{ id: "text" }],
-    outputs: [{ id: "out" }],
-    fn: (inputs) => inputs['text'].toUpperCase()
-});
-
-const result = graph.run("n2");
-
-console.log(result);
