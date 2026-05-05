@@ -12,13 +12,15 @@ export class Lab {
     constructor(private graphService: GraphService){
     }
 
+    // Test functions
+
     runTests() {
         try {
             this.test();
             this.test2();
             this.testBranching();
             this.testDiamond();
-            this.testDiamond2();
+            // this.testDiamond2(); purposeful error to test incorrect input wiring
             this.testParamFallback();
             this.testWireOverridesParam();
             console.log("✅ All tests passed");
@@ -56,8 +58,8 @@ export class Lab {
         this.graphService.addWire(a, "out", b, "text");
         this.graphService.addWire(a, "out", c, "text");
 
-        console.log("Test Brancing (Result 1):",this.graphService.run(b)); // TEST
-        console.log("Test Brancing (Result 2):",this.graphService.run(c)); // test
+        console.log("Test Branching (Result 1):",this.graphService.run(b)); // TEST
+        console.log("Test Branching (Result 2):",this.graphService.run(c)); // test
     }
 
     testDiamond() {
@@ -84,8 +86,8 @@ export class Lab {
         this.graphService.addWire(a, "out", b, "text");
         this.graphService.addWire(a, "out", c, "text");
 
-        this.graphService.addWire(b, "out", d, "text");
-        this.graphService.addWire(c, "out", d, "text2");
+        this.graphService.addWire(b, "out", d, "a");
+        this.graphService.addWire(c, "out", d, "b");
 
         const result = this.graphService.run(d);
 

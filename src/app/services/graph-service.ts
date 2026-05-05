@@ -58,6 +58,14 @@ export class GraphService {
             throw new Error(`Target instance not found: ${to}`);
         }
 
+        const targetInstance = this.graph.instances.get(to)!;
+        const block = this.graph.blocks.get(targetInstance.blockId)!;
+
+        const validInput = block.inputs.some(i => i.id === toInput);
+        if (!validInput) {
+            throw new Error(`Invalid input '${toInput}' for block '${block.id}'`);
+        }
+
         // enforce: one wire per input slot
         this.graph.wires = this.graph.wires.filter(
             w => !(w.to === to && w.toInput === toInput)
