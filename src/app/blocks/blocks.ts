@@ -1,35 +1,37 @@
-/**
- * BLOCK INTERFACE
- */
+export type InputSlot = {
+    id: string;
+}
 
+export type OutputSlot = {
+    id: string;
+}
 
-/**
- * BLOCK DEFINITIONS
- */
+export type BlockID = string;
 
-/**
- * Source Blocks
- */
+export type Block = {
+    id: BlockID;
 
+    inputs: InputSlot[];
+    outputs: OutputSlot[];
 
-/**
- * Transform Blocks
- */
+    fn: (inputs: Record<string, any>, params: any) => any;
+}
 
+export const textBlock: Block = {
+    id: "text",
+    inputs: [],
+    outputs: [{ id: "out" }],
+    fn: (_, params) => params.value
+};
 
-/**
- * Encode Blocks
- */
+export const uppercaseBlock: Block = {
+    id: "uppercase",
+    inputs: [{ id: "text" }],
+    outputs: [{ id: "out" }],
+    fn: (inputs) => inputs['text'].toUpperCase()
+};
 
-
-
-/**
- * Merge Blocks
- */
-
-
-
-/**
- * Filter Blocks
- */
-
+export const BLOCKS: Block[] = [
+    textBlock,
+    uppercaseBlock
+]

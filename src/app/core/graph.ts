@@ -1,26 +1,9 @@
-type InputSlot = {
-    id: string;
-}
+import { Block } from "../blocks/blocks";
+import { BlockID } from "../blocks/blocks";
 
-type OutputSlot = {
-    id: string;
-}
+export type InstanceID = string;
 
-type BlockID = string;
-
-type Block = {
-    id: BlockID;
-
-    inputs: InputSlot[];
-    outputs: OutputSlot[];
-
-    fn: (inputs: Record<string, any>, params: any) => any;
-}
-
-
-type InstanceID = string;
-
-type Wire = {
+export type Wire = {
     from: InstanceID;
     fromOutput: string;
 
@@ -28,14 +11,14 @@ type Wire = {
     toInput: string;
 }
 
-type Instance = {
+export type Instance = {
     id: InstanceID;
     blockId: BlockID;
     params: Record<string,any>
 }
 
 
-class Graph {
+export class Graph {
     instances: Map<InstanceID, Instance>
     wires: Wire[]
     blocks: Map<string, Block>
@@ -94,6 +77,11 @@ class Graph {
         this.cache.set(id, result);
 
         return result;
+    }
+
+    clearRuntime(){
+        this.cache.clear();
+        this.visiting.clear();
     }
 }
 
