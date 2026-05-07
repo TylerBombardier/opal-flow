@@ -1,4 +1,4 @@
-import { Block } from "../blocks";
+import { Block, BlockID } from "../blocks";
 
 export class BlockRegistry {
     private blocks = new Map<string, Block>();
@@ -19,6 +19,10 @@ export class BlockRegistry {
         }
 
         return block;
+    }
+
+    has(id: BlockID){
+        return this.blocks.has(id)
     }
 
     getAll(){

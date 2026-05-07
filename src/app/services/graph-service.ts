@@ -9,11 +9,10 @@ export class GraphService {
     private graph: Graph;
 
     constructor(){
-        
         registerBlocks();
-        this.graph = new Graph(registry.getMap());
-        
+        this.graph = new Graph(registry);
     }
+
 
     run(instanceId: string){
         this.graph.clearRuntime();
@@ -21,13 +20,13 @@ export class GraphService {
     }
 
     reset(){
-        this.graph = new Graph(registry.getMap());
+        this.graph = new Graph(registry);
     }
 
     addInstance(blockId: string, params: Record<string, any> = {}) {
         const id = crypto.randomUUID();
 
-        if (!this.graph.blocks.has(blockId)) {
+        if (!this.graph.registry.has(blockId)) {
             throw new Error(`Block not found: ${blockId}`);
         }
 
@@ -56,7 +55,7 @@ export class GraphService {
         }
 
         const targetInstance = this.graph.instances.get(to)!;
-        const block = this.graph.blocks.get(targetInstance.blockId)!;
+        const block = this.graph.registry.get(targetInstance.blockId)!;
 
         const validInput = block.inputs.some(i => i.id === toInput);
         if (!validInput) {

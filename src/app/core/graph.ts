@@ -1,5 +1,6 @@
 import { Block } from "../blocks/blocks";
 import { BlockID } from "../blocks/blocks";
+import { BlockRegistry } from "../blocks/registry/block-registry";
 
 export type InstanceID = string;
 
@@ -21,15 +22,15 @@ export type Instance = {
 export class Graph {
     instances: Map<InstanceID, Instance>
     wires: Wire[]
-    blocks: Map<string, Block>
+    registry: BlockRegistry
 
     private visiting = new Set<InstanceID>();
     private cache: Map<InstanceID, any>;
 
-    constructor(blocks: Map<string, Block>) {
+    constructor(registry: BlockRegistry) {
         this.instances = new Map<InstanceID, Instance>();
         this.wires = [];
-        this.blocks = blocks;
+        this.registry = registry
         this.cache = new Map<InstanceID, any>();
     }
 
@@ -52,7 +53,7 @@ export class Graph {
             throw new Error(`Instance not found: ${id}`);
         }
 
-        const block = this.blocks.get(instance.blockId);
+        const block = this.registry.get(instance.blockId);
         if (!block) {
             throw new Error(`Block not found: ${instance.blockId}`);
         }
