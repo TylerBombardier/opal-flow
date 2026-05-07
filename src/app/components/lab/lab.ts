@@ -26,6 +26,7 @@ export class Lab {
             this.testMultiOutputBasic();
             this.testMultiOutputDiamond();
             this.testUnusedOutputIgnored();
+            this.testFindReplaceMixed();
             console.log("✅ All tests passed");
         } catch (e) {
             console.error("❌ Test failed:", e);
@@ -196,5 +197,42 @@ export class Lab {
         const result2 = this.graphService.run(a);
 
         console.log("Unused output test:", result2); 
+    }
+
+    testFindReplaceMixed() {
+        // source text
+        const textNode = this.graphService.addInstance("text", {
+            value: "the cat sat on the cat"
+        });
+
+        // replacement value comes from another node
+        const replaceNode = this.graphService.addInstance("text", {
+            value: "dog"
+        });
+
+        // find value is MANUAL PARAM
+        const replaceBlock = this.graphService.addInstance("findReplace", {
+            find: "cat"
+        });
+
+        // wire text input
+        this.graphService.addWire(
+            textNode,
+            "out",
+            replaceBlock,
+            "text"
+        );
+
+        // wire replacement input
+        this.graphService.addWire(
+            replaceNode,
+            "out",
+            replaceBlock,
+            "replace"
+        );
+
+        const result = this.graphService.run(replaceBlock);
+
+        console.log("FindReplace Mixed:", result); //expected: the dog sat on the dog
     }
 }

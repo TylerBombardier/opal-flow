@@ -92,3 +92,22 @@ export const splitCaseBlock: Block = {
         };
     }
 };
+
+export const findReplaceBlock: Block = {
+    id: "findReplace",
+    inputs: [
+        { id: "text" },
+        { id: "find" },
+        { id: "replace" }
+    ],
+    outputs: [{ id: "out" }],
+    fn: (inputs) => {
+        const text = String(inputs["text"] ?? "");
+        const find = String(inputs["find"] ?? "");
+        const replace = String(inputs["replace"] ?? "");
+
+        return {
+            out: text.replaceAll(find, replace)
+        };
+    }
+};
