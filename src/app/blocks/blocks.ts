@@ -62,11 +62,3 @@ export const concatBlock: Block = {
         return String(a) + String(sep) + String(b);
     }
 };
-
-export const BLOCKS: Block[] = [
-    textBlock,
-    uppercaseBlock,
-    lowercaseBlock,
-    reverseBlock,
-    concatBlock
-]

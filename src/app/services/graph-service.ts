@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Graph } from '../core/graph';
-import { BLOCKS } from '../blocks/blocks';
+import { registerBlocks, registry } from '../blocks';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GraphService {
-    private graph: Graph = new Graph();
+    private graph: Graph;
 
     constructor(){
-        for (const block of BLOCKS) {
-            this.graph.blocks.set(block.id, block);
-        }
+        
+        registerBlocks();
+        this.graph = new Graph(registry.getMap());
+        
     }
-
 
     run(instanceId: string){
         this.graph.clearRuntime();
@@ -21,10 +21,7 @@ export class GraphService {
     }
 
     reset(){
-        this.graph = new Graph();
-        for (const block of BLOCKS) {
-            this.graph.blocks.set(block.id, block);
-        }
+        this.graph = new Graph(registry.getMap());
     }
 
     addInstance(blockId: string, params: Record<string, any> = {}) {

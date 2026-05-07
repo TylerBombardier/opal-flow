@@ -26,10 +26,10 @@ export class Graph {
     private visiting = new Set<InstanceID>();
     private cache: Map<InstanceID, any>;
 
-    constructor() {
+    constructor(blocks: Map<string, Block>) {
         this.instances = new Map<InstanceID, Instance>();
         this.wires = [];
-        this.blocks = new Map<string, Block>();
+        this.blocks = blocks;
         this.cache = new Map<InstanceID, any>();
     }
 
