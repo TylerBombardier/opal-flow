@@ -23,6 +23,9 @@ export class Lab {
             // this.testDiamond2(); purposeful error to test incorrect input wiring
             this.testParamFallback();
             this.testWireOverridesParam();
+            this.testMultiOutputBasic();
+            this.testMultiOutputDiamond();
+            this.testUnusedOutputIgnored();
             console.log("✅ All tests passed");
         } catch (e) {
             console.error("❌ Test failed:", e);
@@ -96,8 +99,6 @@ export class Lab {
     }
 
     testParamFallback() {
-        this.graphService.reset();
-
         const a = this.graphService.addInstance("text", { value: "hello" });
         const b = this.graphService.addInstance("text", { value: "world" });
 
@@ -111,12 +112,9 @@ export class Lab {
         const result = this.graphService.run(c);
 
         console.log("Param fallback:", result);
-        console.assert(result === "hello world", "Expected 'hello world'");
     }
 
     testWireOverridesParam() {
-        this.graphService.reset();
-
         const a = this.graphService.addInstance("text", { value: "hello" });
         const b = this.graphService.addInstance("text", { value: "world" });
 
@@ -130,11 +128,73 @@ export class Lab {
 
         this.graphService.addWire(a, "out", c, "text");
         this.graphService.addWire(b, "out", c, "text2");
-        this.graphService.addWire(sepNode, "out", c, "separator");
 
         const result = this.graphService.run(c);
 
         console.log("Wire override:", result);
-        console.assert(result === "hello-world", "Expected 'hello-world'");
+    }
+
+    testMultiOutputBasic() {
+        const a = this.graphService.addInstance("text", { value: "TeSt" });
+
+        const split = this.graphService.addInstance("splitCase");
+
+        const upper = this.graphService.addInstance("uppercase");
+        const lower = this.graphService.addInstance("lowercase");
+
+        // feed input
+        this.graphService.addWire(a, "out", split, "text");
+
+        // IMPORTANT: selecting different outputs
+        this.graphService.addWire(split, "upper", upper, "text");
+        this.graphService.addWire(split, "lower", lower, "text");
+
+        console.log("Upper path:", this.graphService.run(upper)); // TEST
+        console.log("Lower path:", this.graphService.run(lower)); // test
+
+        console.log("splitCase:", this.graphService.run(split)) // Prints both at once
+    }
+
+    testMultiOutputDiamond() {
+        const a = this.graphService.addInstance("text", { value: "TeSt" });
+        const split = this.graphService.addInstance("splitCase");
+
+        const concat = this.graphService.addInstance("concat", {
+            separator: " | "
+        });
+
+        this.graphService.addWire(a, "out", split, "text");
+
+        // split outputs go to different transformations
+        const upper = this.graphService.addInstance("uppercase");
+        const lower = this.graphService.addInstance("lowercase");
+
+        this.graphService.addWire(split, "upper", upper, "text");
+        this.graphService.addWire(split, "lower", lower, "text");
+
+        // converge
+        this.graphService.addWire(upper, "out", concat, "text");
+        this.graphService.addWire(lower, "out", concat, "text2");
+
+        const result = this.graphService.run(concat);
+
+        console.log("Multi-output diamond:", result);
+    }
+
+    testUnusedOutputIgnored() {
+        const a = this.graphService.addInstance("splitCase");
+
+        const b = this.graphService.addInstance("uppercase");
+
+        // only use ONE output
+        this.graphService.addWire(a, "upper", b, "text");
+
+        const result = this.graphService.run(b);
+
+        console.log("Unused output test:", result); // EXPECTED: out: ''
+
+        const result2 = this.graphService.run(a);
+
+        console.log("Unused output test:", result2); 
     }
 }

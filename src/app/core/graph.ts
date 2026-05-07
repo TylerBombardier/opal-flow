@@ -1,3 +1,4 @@
+import { from } from "rxjs";
 import { Block } from "../blocks/blocks";
 import { BlockID } from "../blocks/blocks";
 import { BlockRegistry } from "../blocks/registry/block-registry";
@@ -25,13 +26,13 @@ export class Graph {
     registry: BlockRegistry
 
     private visiting = new Set<InstanceID>();
-    private cache: Map<InstanceID, any>;
+    private cache: Map<InstanceID, Record<string, any>>;
 
     constructor(registry: BlockRegistry) {
         this.instances = new Map<InstanceID, Instance>();
         this.wires = [];
         this.registry = registry
-        this.cache = new Map<InstanceID, any>();
+        this.cache = new Map<InstanceID, Record<string, any>>();
     }
 
     // recursively calculates the graph
@@ -65,19 +66,29 @@ export class Graph {
                 w => w.to === id && w.toInput === slot.id
             );
 
-            if (wire) {
-                inputs[slot.id] = this.run(wire.from);
-            } else {
+            if(!wire){
                 inputs[slot.id] = instance.params?.[slot.id];
+                continue;
             }
+
+            const fromOutputs = this.run(wire.from);
+            const value = fromOutputs?.[wire.fromOutput];
+
+            if (value === undefined) {
+                throw new Error(
+                    `Missing output '${wire.fromOutput}' from node '${wire.from}'`
+                );
+            }
+
+            inputs[slot.id] = value;
         }
 
-        const result = block.fn(inputs, instance.params);
+        const outputs = block.fn(inputs, instance.params ?? {});
 
+        this.cache.set(id, outputs);
         this.visiting.delete(id);
-        this.cache.set(id, result);
 
-        return result;
+        return outputs;
     }
 
     clearRuntime(){

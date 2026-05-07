@@ -14,37 +14,48 @@ export type Block = {
     inputs: InputSlot[];
     outputs: OutputSlot[];
 
-    fn: (inputs: Record<string, any>, params: any) => any;
+    fn: (inputs: Record<string, any>, params: any) => Record<string, any>;
 }
 
 export const textBlock: Block = {
     id: "text",
     inputs: [],
     outputs: [{ id: "out" }],
-    fn: (_, params) => params.value
+    fn: (_, params) => {
+        return { out: params.value }
+    }
 };
 
 export const uppercaseBlock: Block = {
     id: "uppercase",
     inputs: [{ id: "text" }],
     outputs: [{ id: "out" }],
-    fn: (inputs) => inputs['text'].toUpperCase()
+    fn: (inputs) =>  { 
+        return { out: inputs['text'].toUpperCase() } 
+    }
 };
 
 export const lowercaseBlock: Block = {
     id: "lowercase",
     inputs: [{ id: "text" }],
     outputs: [{ id: "out" }],
-    fn: (inputs) => inputs['text'].toLowerCase()
+    fn: (inputs) => {
+        return {
+            out: inputs['text'].toLowerCase()
+        }
+    }
 };
 
 export const reverseBlock: Block = {
     id: "reverse",
     inputs: [{id: "text"}],
     outputs: [{id: "out"}],
-    fn: (inputs) => inputs['text'].split('').reverse().join('')
+    fn: (inputs) => {
+        return {
+            out: inputs['text'].split('').reverse().join('')
+        }
+    }
 }
-
 
 export const concatBlock: Block = {
     id: "concat",
@@ -59,6 +70,25 @@ export const concatBlock: Block = {
         const sep = inputs['separator'] ?? '';
         const b = inputs['text2'] ?? '';
 
-        return String(a) + String(sep) + String(b);
+        return {
+            out: String(a) + String(sep) + String(b)
+        };
+    }
+};
+
+export const splitCaseBlock: Block = {
+    id: "splitCase",
+    inputs: [{ id: "text" }],
+    outputs: [
+        { id: "upper" },
+        { id: "lower" }
+    ],
+    fn: (inputs) => {
+        const text = inputs["text"] ?? "";
+
+        return {
+            upper: String(text).toUpperCase(),
+            lower: String(text).toLowerCase()
+        };
     }
 };
