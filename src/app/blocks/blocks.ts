@@ -1,9 +1,15 @@
+// All valid types for each slot
+export type SlotType = | "string" | "number" | "boolean" | "array" | "object" | "any"
+
 export type InputSlot = {
     id: string;
+    type?: SlotType;
+    required?: boolean; 
 }
 
 export type OutputSlot = {
     id: string;
+    type?: SlotType;
 }
 
 export type BlockID = string;
@@ -20,7 +26,7 @@ export type Block = {
 export const textBlock: Block = {
     id: "text",
     inputs: [],
-    outputs: [{ id: "out" }],
+    outputs: [{ id: "out"}],
     fn: (_, params) => {
         return { out: params.value }
     }

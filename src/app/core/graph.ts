@@ -35,25 +35,27 @@ export class Graph {
         this.cache = new Map<InstanceID, Record<string, any>>();
     }
 
-    // recursively calculates the graph
+    // Recursively calculates the graph
     run(id: InstanceID): any {
-        // already computed
+        // Already computed that before
         if (this.cache.has(id)) {
             return this.cache.get(id);
         }
 
-        // cycle detected
+        // Cycle detected
         if (this.visiting.has(id)) {
             throw new Error(`Cycle detected at ${id}`);
         }
 
         this.visiting.add(id);
 
+        // Checks if the instance exists
         const instance = this.instances.get(id);
         if (!instance) {
             throw new Error(`Instance not found: ${id}`);
         }
 
+        // Checks if the block exists
         const block = this.registry.get(instance.blockId);
         if (!block) {
             throw new Error(`Block not found: ${instance.blockId}`);
@@ -67,14 +69,22 @@ export class Graph {
             );
 
             if(!wire){
-                inputs[slot.id] = instance.params?.[slot.id];
+                const value = inputs[slot.id] = instance.params?.[slot.id];
+
+                if(value === undefined && slot.required){
+                    throw new Error(
+                        `Missing required input '${slot.id}' in node '${id}'`
+                    )
+                }
+
+                inputs[slot.id] = value
                 continue;
             }
 
             const fromOutputs = this.run(wire.from);
             const value = fromOutputs?.[wire.fromOutput];
 
-            if (value === undefined) {
+            if (!(wire.fromOutput in fromOutputs)) {
                 throw new Error(
                     `Missing output '${wire.fromOutput}' from node '${wire.from}'`
                 );
@@ -83,8 +93,10 @@ export class Graph {
             inputs[slot.id] = value;
         }
 
+        // Calls the function, saves output.
         const outputs = block.fn(inputs, instance.params ?? {});
 
+        // Stores the outputted value into the cache
         this.cache.set(id, outputs);
         this.visiting.delete(id);
 
