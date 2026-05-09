@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Graph } from '../core/graph';
 import { registerBlocks, registry } from '../blocks';
+import { SlotType } from '../blocks/blocks';
 
 @Injectable({
   providedIn: 'root',
@@ -27,16 +28,32 @@ export class GraphService {
     addInstance(blockId: string, params: Record<string, any> = {}) {
         const id = crypto.randomUUID(); // Generates an ID for that instance
 
+        const block = this.graph.registry.get(blockId);
+
         // Validates that instance has a valid block
-        if (!this.graph.registry.has(blockId)) {
+        if (!block) {
             throw new Error(`Block not found: ${blockId}`);
+        }
+
+        const finalParams: Record<string, any> = {};
+
+        for (const slot of block.params ?? []) {
+
+            const raw =
+                params[slot.id] ??
+                slot.default;
+
+            finalParams[slot.id] = this.coerce(
+                raw,
+                slot.type ?? "any"
+            );
         }
 
         // Adds instance to graph
         this.graph.instances.set(id, {
             id,
             blockId,
-            params
+            params: finalParams
         });
 
         // Returns generated instance Id
@@ -125,5 +142,37 @@ export class GraphService {
         this.graph.wires = this.graph.wires.filter(
             w => !(w.from === from && w.to === to && w.toInput === toInput)
         );
+    }
+
+    private coerce(value: any, type: SlotType): any {
+        switch(type) {
+
+            case "string":
+                return value == null
+                    ? ""
+                    : String(value);
+
+            case "number": {
+                const n = Number(value);
+                return isNaN(n) ? 0 : n;
+            }
+
+            case "boolean":
+                return Boolean(value);
+
+            case "array":
+                return Array.isArray(value)
+                    ? value
+                    : [];
+
+            case "object":
+                return typeof value === "object" && value !== null
+                    ? value
+                    : {};
+
+            case "any":
+            default:
+                return value;
+        }
     }
 }

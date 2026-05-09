@@ -1,4 +1,4 @@
-import { concatBlock, findReplaceBlock, lowercaseBlock, reverseBlock, splitCaseBlock, textBlock, uppercaseBlock } from "./blocks";
+import { booleanEchoBlock, concatBlock, findReplaceBlock, lowercaseBlock, numberBlock, requiredTextBlock, reverseBlock, splitCaseBlock, textBlock, uppercaseBlock } from "./blocks";
 import { BlockRegistry } from "./registry/block-registry";
 
 export const registry = new BlockRegistry();
@@ -11,4 +11,7 @@ export function registerBlocks(){
     registry.register(concatBlock);
     registry.register(splitCaseBlock);
     registry.register(findReplaceBlock);
+    registry.register(booleanEchoBlock);
+    registry.register(requiredTextBlock);
+    registry.register(numberBlock);
 }

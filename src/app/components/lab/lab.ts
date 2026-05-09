@@ -20,13 +20,18 @@ export class Lab {
             this.test2();
             this.testBranching();
             this.testDiamond();
-            // this.testDiamond2(); purposeful error to test incorrect input wiring
             this.testParamFallback();
             this.testWireOverridesParam();
             this.testMultiOutputBasic();
             this.testMultiOutputDiamond();
             this.testUnusedOutputIgnored();
             this.testFindReplaceMixed();
+            this.testStringCoercion();
+            this.testBooleanCoercion();
+            this.testDefaultParams();
+            this.testRequiredInputFails();
+            this.testTypeMismatch();
+            this.testMissingOutput();
             console.log("✅ All tests passed");
         } catch (e) {
             console.error("❌ Test failed:", e);
@@ -79,24 +84,6 @@ export class Lab {
         this.graphService.addWire(c, "out", d, "text2");
 
         console.log("Diamond Result:",this.graphService.run(d));
-    }
-
-    testDiamond2() {
-        const a = this.graphService.addInstance("text", { value: "TeSt" });
-        const b = this.graphService.addInstance("uppercase");
-        const c = this.graphService.addInstance("lowercase");
-        const d = this.graphService.addInstance("concat", { separator: " + " });
-
-        this.graphService.addWire(a, "out", b, "text");
-        this.graphService.addWire(a, "out", c, "text");
-
-        this.graphService.addWire(b, "out", d, "a");
-        this.graphService.addWire(c, "out", d, "b");
-
-        const result = this.graphService.run(d);
-
-        console.log("Diamond2 result:", result);
-        console.assert(result === "TEST + test", "Expected 'TEST + test'");
     }
 
     testParamFallback() {
@@ -183,20 +170,53 @@ export class Lab {
     }
 
     testUnusedOutputIgnored() {
-        const a = this.graphService.addInstance("splitCase");
+        const t = this.graphService.addInstance("text", {
+            value: "water"
+        });
 
-        const b = this.graphService.addInstance("uppercase");
+        const split = this.graphService.addInstance("splitCase");
+
+        const upper = this.graphService.addInstance("uppercase");
+
+        // wire input properly (THIS WAS MISSING)
+        this.graphService.addWire(
+            t,
+            "out",
+            split,
+            "text"
+        );
 
         // only use ONE output
-        this.graphService.addWire(a, "upper", b, "text");
+        this.graphService.addWire(
+            split,
+            "upper",
+            upper,
+            "text"
+        );
 
-        const result = this.graphService.run(b);
+        const result = this.graphService.run(upper);
 
-        console.log("Unused output test:", result); // EXPECTED: out: ''
+        console.log("Upper path:", result);
 
-        const result2 = this.graphService.run(a);
+        console.assert(
+            result.out === "WATER",
+            "Expected WATER"
+        );
 
-        console.log("Unused output test:", result2); 
+        const result2 = this.graphService.run(split);
+
+        console.log("Split raw output:", result2);
+
+        console.assert(
+            result2.upper === "WATER",
+            "Expected upper output"
+        );
+
+        console.assert(
+            result2.lower === "water",
+            "Expected lower output"
+        );
+
     }
 
     testFindReplaceMixed() {
@@ -235,4 +255,137 @@ export class Lab {
 
         console.log("FindReplace Mixed:", result); //expected: the dog sat on the dog
     }
+
+    testStringCoercion() {
+        const a = this.graphService.addInstance("text", {
+            value: 12345
+        });
+
+        const result = this.graphService.run(a);
+
+        console.log("String coercion:", result);
+
+        console.assert(
+            result.out === "12345",
+            "Expected coerced string"
+        );
+    }
+
+    testBooleanCoercion() {
+        const a = this.graphService.addInstance(
+            "booleanEcho",
+            {
+                value: "hello"
+            }
+        );
+
+        const result = this.graphService.run(a);
+
+        console.log("Boolean coercion:", result);
+
+        console.assert(
+            result.out === true,
+            "Expected true"
+        );
+    }
+
+    testDefaultParams() {
+        const a = this.graphService.addInstance("text");
+
+        const result = this.graphService.run(a);
+
+        console.log("Default params:", result);
+
+        console.assert(
+            result.out === "",
+            "Expected default empty string"
+        );
+    }
+
+    testRequiredInputFails() {
+        const a = this.graphService.addInstance(
+            "requiredText"
+        );
+
+        try {
+            this.graphService.run(a);
+
+            console.error(
+                "Expected required input error"
+            );
+
+        } catch (e) {
+            console.log(
+                "Required input test passed:",
+                e
+            );
+        }
+    }
+
+    testTypeMismatch() {
+        const numberNode =
+            this.graphService.addInstance(
+                "number",
+                { value: 42 }
+            );
+
+        const upper =
+            this.graphService.addInstance(
+                "uppercase"
+            );
+
+        try {
+
+            this.graphService.addWire(
+                numberNode,
+                "out",
+                upper,
+                "text"
+            );
+
+            console.error(
+                "Expected type mismatch"
+            );
+
+        } catch (e) {
+
+            console.log(
+                "Type mismatch passed:",
+                e
+            );
+        }
+    }
+
+    testMissingOutput() {
+        const a =
+            this.graphService.addInstance(
+                "text",
+                { value: "hello" }
+            );
+
+        const b =
+            this.graphService.addInstance(
+                "uppercase"
+            );
+
+        try {
+
+            this.graphService.addWire(
+                a,
+                "fakeOutput",
+                b,
+                "text"
+            );
+
+            this.graphService.run(b);
+
+        } catch (e) {
+
+            console.log(
+                "Missing output test passed:",
+                e
+            );
+        }
+    }
+
 }

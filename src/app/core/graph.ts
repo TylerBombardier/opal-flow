@@ -65,29 +65,29 @@ export class Graph {
 
         for (const slot of block.inputs) {
             const wire = this.wires.find(
-                w => w.to === id && w.toInput === slot.id
+                 w => w.to === id && w.toInput === slot.id
             );
 
-            if(!wire){
-                const value = inputs[slot.id] = instance.params?.[slot.id];
+            let value;
 
-                if(value === undefined && slot.required){
+            if (wire) {
+                const fromOutputs = this.run(wire.from);
+
+                if (!(wire.fromOutput in fromOutputs)) {
                     throw new Error(
-                        `Missing required input '${slot.id}' in node '${id}'`
-                    )
+                        `Missing output '${wire.fromOutput}' from node '${wire.from}'`
+                    );
                 }
 
-                inputs[slot.id] = value
-                continue;
-            }
+                value = fromOutputs[wire.fromOutput];
+            } else {
+                value = instance.params?.[slot.id] ?? slot.default;
 
-            const fromOutputs = this.run(wire.from);
-            const value = fromOutputs?.[wire.fromOutput];
-
-            if (!(wire.fromOutput in fromOutputs)) {
-                throw new Error(
-                    `Missing output '${wire.fromOutput}' from node '${wire.from}'`
-                );
+                if (value === undefined && slot.required) {
+                    throw new Error(
+                        `Missing required input '${slot.id}' in node '${id}'`
+                    );
+                }
             }
 
             inputs[slot.id] = value;
