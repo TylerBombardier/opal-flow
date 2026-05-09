@@ -1,6 +1,6 @@
 // All valid types for each slot
 export type SlotType = | "string" | "number" | "boolean" | "array" | "object" | "any"
-
+// Master interface for all slots
 export type ValueSlot = {
     id: string;
     type?: SlotType;
