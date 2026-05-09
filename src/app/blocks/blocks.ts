@@ -164,6 +164,24 @@ export const concatBlock: Block = {
         }
     ],
 
+    params: [
+        {
+            id: "text",
+            type: "string",
+            ui: "textbox"
+        },
+        {
+            id: "separator",
+            type: "string",
+            ui: "textbox"
+        },
+        {
+            id: "text2",
+            type: "string",
+            ui: "textbox"
+        }
+    ],
+
     outputs: [
         {
             id: "out",
@@ -175,7 +193,7 @@ export const concatBlock: Block = {
         return {
             out:
                 String(inputs['text'] ?? "") +
-                String(inputs['seperator'] ?? "") +
+                String(inputs['separator'] ?? "") +
                 String(inputs['text2'] ?? "")
         };
     }
@@ -231,6 +249,19 @@ export const findReplaceBlock: Block = {
             id: "replace",
             type: "string",
             default: ""
+        }
+    ],
+
+    params: [
+        {
+            id: "find",
+            type: "string",
+            ui: "textbox"
+        },
+        {
+            id: "replace",
+            type: "string",
+            ui: "textbox"
         }
     ],
 
