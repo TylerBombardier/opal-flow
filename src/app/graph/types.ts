@@ -1,0 +1,17 @@
+import { BlockID } from "../blocks/blocks";
+
+export type InstanceID = string;
+
+export type Wire = {
+    from: InstanceID;
+    fromOutput: string;
+
+    to: InstanceID;
+    toInput: string;
+}
+
+export type Instance = {
+    id: InstanceID;
+    blockId: BlockID;
+    params: Record<string,any>
+}

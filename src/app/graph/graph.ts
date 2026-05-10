@@ -2,22 +2,7 @@ import { from } from "rxjs";
 import { Block } from "../blocks/blocks";
 import { BlockID } from "../blocks/blocks";
 import { BlockRegistry } from "../blocks/registry/block-registry";
-
-export type InstanceID = string;
-
-export type Wire = {
-    from: InstanceID;
-    fromOutput: string;
-
-    to: InstanceID;
-    toInput: string;
-}
-
-export type Instance = {
-    id: InstanceID;
-    blockId: BlockID;
-    params: Record<string,any>
-}
+import { Instance, InstanceID, Wire } from "./types";
 
 
 export class Graph {

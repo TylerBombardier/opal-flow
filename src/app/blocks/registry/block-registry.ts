@@ -1,4 +1,5 @@
-import { Block, BlockID } from "../blocks";
+import { Block, BlockID } from "../types";
+
 
 export class BlockRegistry {
     private blocks = new Map<string, Block>();

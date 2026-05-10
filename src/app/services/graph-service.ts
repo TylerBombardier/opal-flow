@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Graph } from '../core/graph';
+import { Graph } from '../graph/graph';
 import { registerBlocks, registry } from '../blocks';
-import { SlotType } from '../blocks/blocks';
+import { SlotType } from '../blocks/types';
+
 
 @Injectable({
   providedIn: 'root',
