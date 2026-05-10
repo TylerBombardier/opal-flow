@@ -37,8 +37,13 @@ export type BlockID = string;
 export type Block = {
     id: BlockID;
 
+    displayName?: string;
+    description?: string;
+
     category?: string;
     keywords?: string[];
+
+    pure?: boolean;
 
     inputs: InputSlot[];
     params?: ParamSlot[];
