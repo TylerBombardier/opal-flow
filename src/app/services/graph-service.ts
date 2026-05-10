@@ -41,7 +41,7 @@ export class GraphService {
 
             const raw =
                 params[slot.id] ??
-                slot.default;
+                slot.defaultValue;
 
             finalParams[slot.id] = this.coerce(
                 raw,

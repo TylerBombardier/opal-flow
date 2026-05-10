@@ -2,13 +2,14 @@ import { UIConfig } from "./ui-config";
 
 // All valid types for each slot
 export type SlotType = | "string" | "number" | "boolean" | "array" | "object" | "any"
+
 // Master interface for all slots
 export type ValueSlot = {
     id: string;
     type?: SlotType;
     required?: boolean;
-    default?: any;
-    label?: string;
+    defaultValue?: any;
+    displayName?: string;
     description?: string;
 }
 
@@ -49,7 +50,7 @@ export const textBlock: Block = {
         {
             id: "value",
             type: "string",
-            default: "",
+            defaultValue: "",
             ui: {
                 type: "textbox"
             }
@@ -159,7 +160,7 @@ export const concatBlock: Block = {
         {
             id: "separator",
             type: "string",
-            default: ""
+            defaultValue: ""
         },
         {
             id: "text2",
@@ -253,12 +254,12 @@ export const findReplaceBlock: Block = {
         {
             id: "find",
             type: "string",
-            default: ""
+            defaultValue: ""
         },
         {
             id: "replace",
             type: "string",
-            default: ""
+            defaultValue: ""
         }
     ],
 
@@ -306,7 +307,7 @@ export const booleanEchoBlock: Block = {
         {
             id: "value",
             type: "boolean",
-            default: false,
+            defaultValue: false,
             ui: {
                 type: "checkbox"
             }
@@ -357,7 +358,7 @@ export const numberBlock: Block = {
         {
             id: "value",
             type: "number",
-            default: 0
+            defaultValue: 0
         }
     ],
 
