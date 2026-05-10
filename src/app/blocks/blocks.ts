@@ -6,11 +6,17 @@ export type SlotType = | "string" | "number" | "boolean" | "array" | "object" | 
 // Master interface for all slots
 export type ValueSlot = {
     id: string;
-    type?: SlotType;
-    required?: boolean;
-    defaultValue?: any;
+
+    type: SlotType;
+
     displayName?: string;
     description?: string;
+
+    required?: boolean;
+
+    defaultValue?: any;
+
+    hidden?: boolean;
 }
 
 export type InputSlot = ValueSlot & {
@@ -23,12 +29,16 @@ export type OutputSlot = ValueSlot & {
 
 export type ParamSlot = ValueSlot & {
     ui?: UIConfig;
+    editable?: boolean;
 }
 
 export type BlockID = string;
 
 export type Block = {
     id: BlockID;
+
+    category?: string;
+    keywords?: string[];
 
     inputs: InputSlot[];
     params?: ParamSlot[];
