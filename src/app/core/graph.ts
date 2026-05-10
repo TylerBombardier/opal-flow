@@ -81,7 +81,7 @@ export class Graph {
 
                 value = fromOutputs[wire.fromOutput];
             } else {
-                value = instance.params?.[slot.id] ?? slot.default;
+                value = instance.params?.[slot.id] ?? slot.defaultValue;
 
                 if (value === undefined && slot.required) {
                     throw new Error(
