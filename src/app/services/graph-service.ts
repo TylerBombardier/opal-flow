@@ -69,8 +69,8 @@ export class GraphService {
         to: string,
         toInput: string
     ) {
-        const sourceInstance = this.graph.instances.get(from)!;
-        const targetInstance = this.graph.instances.get(to)!;
+        const sourceInstance = this.graph.instances.get(from);
+        const targetInstance = this.graph.instances.get(to);
 
         // Validates Both Instances Exist
         if (!sourceInstance) {
@@ -99,7 +99,7 @@ export class GraphService {
 
         if(!outputSlot){
             throw new Error(
-                `Invalid input '${toInput}' for block '${targetBlock.id}'`
+                `Invalid input '${fromOutput}' for block '${sourceBlock.id}'`
             );
         }
 
@@ -144,5 +144,9 @@ export class GraphService {
         this.graph.wires = this.graph.wires.filter(
             w => !(w.from === from && w.to === to && w.toInput === toInput)
         );
+    }
+
+    setParam(instanceId: string, paramId: string, value: any){
+
     }
 }
