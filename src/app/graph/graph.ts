@@ -1,6 +1,4 @@
 import { from } from "rxjs";
-import { Block } from "../blocks/blocks";
-import { BlockID } from "../blocks/blocks";
 import { BlockRegistry } from "../blocks/registry/block-registry";
 import { Instance, InstanceID, Wire } from "./types";
 

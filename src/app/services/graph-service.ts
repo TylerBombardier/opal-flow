@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Graph } from '../graph/graph';
 import { registerBlocks, registry } from '../blocks';
 import { SlotType } from '../blocks/types';
+import { coerce } from '../graph/rules';
 
 
 @Injectable({
@@ -44,7 +45,7 @@ export class GraphService {
                 params[slot.id] ??
                 slot.defaultValue;
 
-            finalParams[slot.id] = this.coerce(
+            finalParams[slot.id] = coerce(
                 raw,
                 slot.type ?? "any"
             );
@@ -143,37 +144,5 @@ export class GraphService {
         this.graph.wires = this.graph.wires.filter(
             w => !(w.from === from && w.to === to && w.toInput === toInput)
         );
-    }
-
-    private coerce(value: any, type: SlotType): any {
-        switch(type) {
-
-            case "string":
-                return value == null
-                    ? ""
-                    : String(value);
-
-            case "number": {
-                const n = Number(value);
-                return isNaN(n) ? 0 : n;
-            }
-
-            case "boolean":
-                return Boolean(value);
-
-            case "array":
-                return Array.isArray(value)
-                    ? value
-                    : [];
-
-            case "object":
-                return typeof value === "object" && value !== null
-                    ? value
-                    : {};
-
-            case "any":
-            default:
-                return value;
-        }
     }
 }

@@ -1,4 +1,4 @@
-import { BlockID } from "../blocks/blocks";
+import { BlockID } from "../blocks/types";
 
 export type InstanceID = string;
 
