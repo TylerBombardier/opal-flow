@@ -19,41 +19,36 @@ export class Graph {
 
     // Recursively calculates the graph
     run(id: InstanceID): any {
-        // Already computed that before
         if (this.cache.has(id)) {
             return this.cache.get(id);
         }
-        
 
-        // Cycle detected
         if (this.visiting.has(id)) {
             throw new Error(`Cycle detected at ${id}`);
         }
 
         this.visiting.add(id);
 
-        // Checks if the instance exists
         const instance = this.instances.get(id);
+
         if (!instance) {
             throw new Error(`Instance not found: ${id}`);
         }
 
-        // Checks if the block exists
         const block = this.registry.get(instance.blockId);
-        if (!block) {
-            throw new Error(`Block not found: ${instance.blockId}`);
-        }
 
         const inputs: Record<string, any> = {};
 
         for (const slot of block.inputs) {
+
             const wire = this.wires.find(
-                 w => w.to === id && w.toInput === slot.id
+                w => w.to === id && w.toInput === slot.id
             );
 
-            let value;
+            let value: any;
 
             if (wire) {
+
                 const fromOutputs = this.run(wire.from);
 
                 if (!(wire.fromOutput in fromOutputs)) {
@@ -63,7 +58,9 @@ export class Graph {
                 }
 
                 value = fromOutputs[wire.fromOutput];
+
             } else {
+
                 value = instance.params?.[slot.id] ?? slot.defaultValue;
 
                 if (value === undefined && slot.required) {
@@ -76,14 +73,13 @@ export class Graph {
             inputs[slot.id] = value;
         }
 
-        // Calls the function, saves output.
         const outputs = block.fn(
-            inputs, 
+            inputs,
             instance.params ?? {}
         );
 
-        // Stores the outputted value into the cache
         this.cache.set(id, outputs);
+
         this.visiting.delete(id);
 
         return outputs;
@@ -92,5 +88,28 @@ export class Graph {
     clearRuntime(){
         this.cache.clear();
         this.visiting.clear();
+    }
+
+    invalidateFrom(startId: InstanceID) {
+        const affected = new Set<InstanceID>();
+
+        const visit = (id: InstanceID) => {
+            if (affected.has(id)) return;
+
+            affected.add(id);
+
+            for (const wire of this.wires) {
+                if (wire.from === id) {
+                    visit(wire.to);
+                }
+            }
+        };
+
+        visit(startId);
+
+        // remove from cache
+        for (const id of affected) {
+            this.cache.delete(id);
+        }
     }
 }
