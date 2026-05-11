@@ -101,44 +101,85 @@ export function validateOutputs(
     }
 }
 
+// export function validateWire(
+//     wire: Wire,
+//     fromInstance: Instance,
+//     toInstance: Instance,
+//     fromBlock: Block,
+//     toBlock: Block
+// ): void {
+
+//     // Prevents a self connection
+//     if (wire.from === wire.to) {
+//         throw new Error(
+//             `Cannot connect node to itself`
+//         );
+//     }
+
+//     const output = fromBlock.outputs.find(
+//         o => o.id === wire.fromOutput
+//     );
+
+//     if (!output) {
+//         throw new Error(
+//             `Output '${wire.fromOutput}' does not exist on block '${fromBlock.id}'`
+//         );
+//     }
+
+//     const input = toBlock.inputs.find(
+//         i => i.id === wire.toInput
+//     );
+
+//     if (!input) {
+//         throw new Error(
+//             `Input '${wire.toInput}' does not exist on block '${toBlock.id}'`
+//         );
+//     }
+
+//     if (!canConnect(output, input)) {
+//         throw new Error(
+//             `Cannot connect '${output.type}' to '${input.type}'`
+//         );
+//     }
+// }
+
 export function validateWire(
-    wire: Wire,
-    fromInstance: Instance,
-    toInstance: Instance,
-    fromBlock: Block,
-    toBlock: Block
-): void {
+    sourceBlock: Block,
+    targetBlock: Block,
+    fromOutput: string,
+    toInput: string
+) {
 
-    // Prevents a self connection
-    if (wire.from === wire.to) {
+    const outputSlot =
+        sourceBlock.outputs.find(
+            o => o.id === fromOutput
+        );
+
+    if (!outputSlot) {
         throw new Error(
-            `Cannot connect node to itself`
+            `Invalid output '${fromOutput}'`
         );
     }
 
-    const output = fromBlock.outputs.find(
-        o => o.id === wire.fromOutput
-    );
+    const inputSlot =
+        targetBlock.inputs.find(
+            i => i.id === toInput
+        );
 
-    if (!output) {
+    if (!inputSlot) {
         throw new Error(
-            `Output '${wire.fromOutput}' does not exist on block '${fromBlock.id}'`
+            `Invalid input '${toInput}'`
         );
     }
 
-    const input = toBlock.inputs.find(
-        i => i.id === wire.toInput
-    );
-
-    if (!input) {
+    if (
+        !canConnect(
+            outputSlot,
+            inputSlot
+        )
+    ) {
         throw new Error(
-            `Input '${wire.toInput}' does not exist on block '${toBlock.id}'`
-        );
-    }
-
-    if (!canConnect(output, input)) {
-        throw new Error(
-            `Cannot connect '${output.type}' to '${input.type}'`
+            `Type mismatch: '${outputSlot.type}' -> '${inputSlot.type}'`
         );
     }
 }

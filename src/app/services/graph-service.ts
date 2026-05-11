@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Graph } from '../graph/graph';
 import { registerBlocks, registry } from '../blocks';
 import { SlotType } from '../blocks/types';
-import { coerce } from '../graph/rules';
+import { canConnect, coerce, validateWire } from '../graph/rules';
 
 
 @Injectable({
@@ -41,6 +41,7 @@ export class GraphService {
 
         for (const slot of block.params ?? []) {
 
+            // Coerces parameter values on instantiation
             const raw =
                 params[slot.id] ??
                 slot.defaultValue;
@@ -68,22 +69,22 @@ export class GraphService {
         to: string,
         toInput: string
     ) {
+        const sourceInstance = this.graph.instances.get(from)!;
+        const targetInstance = this.graph.instances.get(to)!;
+
         // Validates Both Instances Exist
-        if (!this.graph.instances.has(from)) {
+        if (!sourceInstance) {
             throw new Error(`Source instance not found: ${from}`);
         }
 
-        if (!this.graph.instances.has(to)) {
+        if (!targetInstance) {
             throw new Error(`Target instance not found: ${to}`);
         }
-
-        const sourceInstance = this.graph.instances.get(from)!;
-        const targetInstance = this.graph.instances.get(to)!;
 
         const sourceBlock = this.graph.registry.get(sourceInstance.blockId)!;
         const targetBlock = this.graph.registry.get(targetInstance.blockId)!;
 
-        // Validate Slot Input Exists
+        // Validate Slot Input/Output Exists
         const inputSlot = targetBlock.inputs.find(
             i => i.id === toInput
         )
@@ -102,19 +103,18 @@ export class GraphService {
             );
         }
 
-        // Slot Type Validation
-        const outputType = outputSlot.type ?? "any";
-        const inputType = inputSlot.type ?? "any";
-
-        if(
-            outputType !== "any" &&
-            inputType !== "any" && 
-            outputType !== inputType
-        ){
+        if (from === to) {
             throw new Error(
-                `Type mismatch: ${outputType} -> ${inputType}`
+                `Cannot connect node to itself`
             );
         }
+
+        validateWire(
+            sourceBlock,
+            targetBlock,
+            fromOutput,
+            toInput
+        )
 
 
         // Enforces one wire per InputSlot
