@@ -23,6 +23,7 @@ export class Graph {
         if (this.cache.has(id)) {
             return this.cache.get(id);
         }
+        
 
         // Cycle detected
         if (this.visiting.has(id)) {
@@ -76,7 +77,10 @@ export class Graph {
         }
 
         // Calls the function, saves output.
-        const outputs = block.fn(inputs, instance.params ?? {});
+        const outputs = block.fn(
+            inputs, 
+            instance.params ?? {}
+        );
 
         // Stores the outputted value into the cache
         this.cache.set(id, outputs);
