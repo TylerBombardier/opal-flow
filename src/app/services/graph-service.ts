@@ -128,6 +128,8 @@ export class GraphService {
             to,
             toInput
         });
+
+        this.graph.invalidateFrom(from)
     }
 
     removeInstance(id: string) {
@@ -137,6 +139,8 @@ export class GraphService {
         this.graph.wires = this.graph.wires.filter(
             w => w.from !== id && w.to !== id
         );
+
+        this.graph.invalidateFrom(id)
     }
 
     removeWire(from: string, to: string, toInput: string) {
@@ -144,9 +148,34 @@ export class GraphService {
         this.graph.wires = this.graph.wires.filter(
             w => !(w.from === from && w.to === to && w.toInput === toInput)
         );
+
+        this.graph.invalidateFrom(from)
     }
 
     setParam(instanceId: string, paramId: string, value: any){
+        const instance = this.graph.instances.get(instanceId);
 
+        if (!instance) {
+            throw new Error(`Instance not found: ${instanceId}`);
+        }
+
+        const block = this.graph.registry.get(instance.blockId);
+
+        const param = block.params?.find(
+            p => p.id === paramId
+        );
+
+        if (!param) {
+            throw new Error(
+                `Invalid param '${paramId}' for block '${block.id}'`
+            );
+        }
+
+        instance.params[paramId] = coerce(
+            value,
+            param.type ?? "any"
+        );
+
+        this.graph.invalidateFrom(instanceId)
     }
 }
