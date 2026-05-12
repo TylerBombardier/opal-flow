@@ -1,7 +1,7 @@
 <div class="canvas">
     @for (instance of instances; track instance.id) {
-        <app-block-instance>
-            
+        <app-block-instance [instance]="instance">
+
         </app-block-instance>
     }
 </div>
