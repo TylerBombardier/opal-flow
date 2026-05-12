@@ -23,6 +23,10 @@ export class GraphService {
         return this.graph.run(instanceId);
     }
 
+    getGraph(){
+        return this.graph;
+    }
+
     reset(){
         this.graph = new Graph(registry);
     }
@@ -56,7 +60,11 @@ export class GraphService {
         this.graph.instances.set(id, {
             id,
             blockId,
-            params: finalParams
+            params: finalParams,
+            position: {
+                x: 0,
+                y: 0
+            }
         });
 
         // Returns generated instance Id

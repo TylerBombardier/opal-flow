@@ -13,5 +13,9 @@ export type Wire = {
 export type Instance = {
     id: InstanceID;
     blockId: BlockID;
-    params: Record<string,any>
+    params: Record<string,any>,
+    position: {
+        x: number;
+        y: number;
+    }
 }

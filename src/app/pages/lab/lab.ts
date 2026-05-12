@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { GraphService } from '../../services/graph-service';
+import { Canvas } from "../../ui/canvas/canvas";
 
 @Component({
   selector: 'app-lab',
-  imports: [],
+  imports: [Canvas],
   templateUrl: './lab.html',
   styleUrl: './lab.scss',
 })
