@@ -1,3 +1,9 @@
-<div class="block-instance">
-    {{ instance.id }}
+<div
+    class="block-instance"
+    [style.left.px]="instance.position.x"
+    [style.top.px]="instance.position.y"
+>
+
+    {{ block.displayName }}
+
 </div>

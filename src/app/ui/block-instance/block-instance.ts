@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { GraphService } from '../../services/graph-service';
 import { Instance } from '../../graph/types';
 
 @Component({
@@ -8,6 +9,12 @@ import { Instance } from '../../graph/types';
   styleUrl: './block-instance.scss',
 })
 export class BlockInstance {
+    constructor(public graphService: GraphService){}
+
     @Input()
     instance!: Instance
+
+    get block(){
+        return this.graphService.getGraph().registry.get(this.instance.blockId)
+    }
 }
