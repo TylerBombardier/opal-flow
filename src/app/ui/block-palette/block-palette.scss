@@ -13,25 +13,50 @@
 
     z-index: 1000;
 
-    overflow-y: auto;
-
     padding: 12px;
 
     backdrop-filter: blur(8px);
 }
 
+.palette-header{
+    margin-bottom: 10px;
+}
+
 .search {
     width: 100%;
-
     padding: 10px;
-
-    margin-bottom: 16px;
 
     border: none;
     border-radius: 8px;
 
     background: #2a2a2a;
     color: white;
+}
+
+.collapse-button {
+    position: absolute;
+
+    top: 16px;
+    right: -35px;
+
+    width: 36px;
+    height: 36px;
+
+    color: white;
+
+    cursor: pointer;
+}
+
+.collapse-button {
+    transition: transform 0.2s ease;
+}
+
+.collapse-button.closed {
+    transform: rotate(180deg);
+}
+
+.search:focus {
+    outline: 1px solid #555;
 }
 
 .category {
@@ -64,12 +89,15 @@
 
     transition:
         background 0.15s,
-        border-color 0.15s;
+        border-color 0.15s,
+        transform 0.1s ease;
 }
 
 .block-item:hover {
     background: #2f2f2f;
     border-color: #444;
+
+    transform: translateY(-1px);
 }
 
 .block-name {

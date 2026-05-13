@@ -13,6 +13,11 @@ export class BlockPalette {
     constructor(public graphService: GraphService){}
 
     search = ""
+    isOpen = true;
+
+    toggle(){
+        this.isOpen = !this.isOpen
+    }
 
     get blocks(){
         return this.graphService.getGraph().registry.getAll();
