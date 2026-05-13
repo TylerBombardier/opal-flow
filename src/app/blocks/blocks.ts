@@ -4,6 +4,8 @@ import { Block } from "./types";
 
 export const textBlock: Block = {
     id: "text",
+    displayName: "Text Source",
+    category: "Source",
 
     inputs: [],
 
@@ -34,6 +36,8 @@ export const textBlock: Block = {
 
 export const uppercaseBlock: Block = {
     id: "uppercase",
+    displayName: "Uppercase",
+    category: "Transform",
 
     inputs: [
         {
@@ -59,6 +63,8 @@ export const uppercaseBlock: Block = {
 
 export const lowercaseBlock: Block = {
     id: "lowercase",
+    displayName: "Lowercase",
+    category: "Transform",
 
     inputs: [
         {
@@ -84,6 +90,8 @@ export const lowercaseBlock: Block = {
 
 export const reverseBlock: Block = {
     id: "reverse",
+    displayName: "Reverse",
+    category: "Transform",
 
     inputs: [
         {
@@ -111,6 +119,8 @@ export const reverseBlock: Block = {
 
 export const concatBlock: Block = {
     id: "concat",
+    displayName: "Concatenation",
+    category: "Merge",
 
     inputs: [
         {
@@ -173,6 +183,8 @@ export const concatBlock: Block = {
 
 export const splitCaseBlock: Block = {
     id: "splitCase",
+    displayName: "Split By Case",
+    category: "Split",
 
     inputs: [
         {
@@ -205,6 +217,8 @@ export const splitCaseBlock: Block = {
 
 export const findReplaceBlock: Block = {
     id: "findReplace",
+    displayName: "Find & Replace",
+    category: "Transform",
 
     inputs: [
         {
@@ -261,6 +275,8 @@ export const findReplaceBlock: Block = {
 
 export const booleanEchoBlock: Block = {
     id: "booleanEcho",
+    displayName: "Switch",
+    category: "Source",
 
     inputs: [],
 
@@ -287,31 +303,10 @@ export const booleanEchoBlock: Block = {
     })
 };
 
-export const requiredTextBlock: Block = {
-    id: "requiredText",
-
-    inputs: [
-        {
-            id: "text",
-            type: "string",
-            required: true
-        }
-    ],
-
-    outputs: [
-        {
-            id: "out",
-            type: "string"
-        }
-    ],
-
-    fn: (inputs) => ({
-        out: inputs['text']
-    })
-};
-
 export const numberBlock: Block = {
     id: "number",
+    displayName: "Number",
+    category: "Source",
 
     inputs: [],
 
