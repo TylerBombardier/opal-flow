@@ -1,0 +1,41 @@
+<div class="palette">
+
+    <input
+        class="search"
+        type="text"
+        placeholder="Search blocks..."
+        [(ngModel)]="search"
+    >
+
+    @for (
+        group of groupedBlocks | keyvalue;
+        track group.key
+    ) {
+
+        <div class="category">
+
+            <div class="category-title">
+                {{ group.key }}
+            </div>
+
+            @for (block of group.value; track block.id) {
+
+                <div class="block-item">
+
+                    <div class="block-name">
+                        {{ block.displayName ?? block.id }}
+                    </div>
+
+                    <div class="block-id">
+                        {{ block.id }}
+                    </div>
+
+                </div>
+
+            }
+
+        </div>
+
+    }
+
+</div>

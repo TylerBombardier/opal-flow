@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { GraphService } from '../../services/graph-service';
 import { Canvas } from "../../ui/canvas/canvas";
+import { BlockPalette } from "../../ui/block-palette/block-palette";
 
 @Component({
   selector: 'app-lab',
-  imports: [Canvas],
+  imports: [Canvas, BlockPalette],
   templateUrl: './lab.html',
   styleUrl: './lab.scss',
 })
