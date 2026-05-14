@@ -16,6 +16,12 @@
     padding: 12px;
 
     backdrop-filter: blur(8px);
+
+    transition: transform 0.2s ease;
+}
+
+.palette.closed{
+    transform: translateX(-260px)
 }
 
 .palette-header{
@@ -52,7 +58,7 @@
 }
 
 .collapse-button.closed {
-    transform: rotate(180deg);
+    transform: rotate(180deg) translateX(5px);
 }
 
 .search:focus {
