@@ -1,10 +1,55 @@
 .canvas {
+    position: fixed;
+    inset: 0;
+    background: #1e1e1e;
+}
+
+// The world that we're transforming
+.world {
     position: relative;
 
-    width: 100vw;
-    height: 100vh;
+    width: 50000px;
+    height: 50000px;
 
-    overflow: hidden;
+    touch-action: none;
+}
 
-    background: #1e1e1e;
+// The grid that you see on the screen
+.grid {
+    position: absolute;
+    inset: 0;
+
+    background-image:
+
+        linear-gradient(
+            to right,
+            rgba(255,255,255,0.03) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            to bottom,
+            rgba(255,255,255,0.03) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            to right,
+            rgba(255,255,255,0.08) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            to bottom,
+            rgba(255,255,255,0.08) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        32px 32px,
+        32px 32px,
+        160px 160px,
+        160px 160px;
+
+    pointer-events: none;
 }
