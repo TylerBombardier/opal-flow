@@ -11,7 +11,7 @@
 
         <button 
             class="collapse-button"
-            (click)="toggle()"
+            (click)="toggleTray()"
             [class.closed]="!isOpen"
         >
             <svg xmlns="http://www.w3.org/2000/svg"
@@ -35,13 +35,17 @@
             track group.key
         ) {
 
-            <div class="category">
+            <div class="category" [class.closed]="!isCategoryOpen(group.key)">
 
-                <div class="category-title">
+                <div 
+                    class="category-title"
+                    (click)="toggleCategory(group.key)"
+                >
                     {{ group.key }}
                 </div>
 
-                @for (block of group.value; track block.id) {
+                @if (isCategoryOpen(group.key)) {
+                    @for (block of group.value; track block.id) {
 
                     <div class="block-item">
                         <div class="block-name">
@@ -53,7 +57,10 @@
                         </div>
                     </div>
 
+                    }
                 }
+
+                
 
             </div>
 

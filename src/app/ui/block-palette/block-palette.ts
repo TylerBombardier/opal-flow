@@ -12,17 +12,36 @@ import { KeyValuePipe } from '@angular/common'
 export class BlockPalette {
     constructor(public graphService: GraphService){}
 
+    categoryOpen = new Set<string>();
+
     search = ""
     isOpen = true;
 
-    toggle(){
+    // Toggles the block palette tray
+    toggleTray(){
         this.isOpen = !this.isOpen
     }
 
+    // Toggles a category inside the tray
+    toggleCategory(key: string){
+        if(this.categoryOpen.has(key)){
+            this.categoryOpen.delete(key);
+        } else {
+            this.categoryOpen.add(key);
+        }
+    }
+
+    // Checks if a category is open
+    isCategoryOpen(key: string): boolean{
+        return this.categoryOpen.has(key);
+    }
+
+    // Returns all currently registered blocks
     get blocks(){
         return this.graphService.getGraph().registry.getAll();
     }
 
+    // Returns all blocks with the current filter for search
     get filteredBlocks() {
         return this.blocks.filter(block => {
             const text = (block.displayName ?? block.id).toLowerCase();
@@ -33,6 +52,7 @@ export class BlockPalette {
         });
     }
 
+    // Returns blocks in their respective groups
     get groupedBlocks() {
         const groups: Record<string, typeof this.filteredBlocks> = {};
 

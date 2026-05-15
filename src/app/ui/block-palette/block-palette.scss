@@ -1,3 +1,5 @@
+// Palette Styling
+
 .palette {
     position: absolute;
 
@@ -52,6 +54,8 @@
     border-radius: 4px;
 }
 
+// Search Styling
+
 .search {
     width: 100%;
     padding: 10px;
@@ -62,6 +66,12 @@
     background: #2a2a2a;
     color: white;
 }
+
+.search:focus {
+    outline: 1px solid #555;
+}
+
+// Collapse Tray Button Styling
 
 .collapse-button {
     position: absolute;
@@ -85,24 +95,28 @@
     transform: rotate(180deg) translateX(5px);
 }
 
-.search:focus {
-    outline: 1px solid #555;
-}
+// Category Styling
 
 .category {
     margin-bottom: 18px;
+}
+
+.category.closed .category-title{
+    color: #888;
 }
 
 .category-title {
     font-size: 12px;
     font-weight: bold;
 
-    color: #888;
+    color: #c6c6c6;
 
     margin-bottom: 8px;
 
     text-transform: uppercase;
 }
+
+// Block Item Styling
 
 .block-item {
     background: #252525;
