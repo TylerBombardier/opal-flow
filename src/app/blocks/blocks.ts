@@ -329,3 +329,63 @@ export const numberBlock: Block = {
         out: params['value']
     })
 };
+
+export const addBlock: Block = {
+    id: "add",
+    displayName: "Add",
+    category: "Math",
+
+    inputs: [
+        { id: "a", type: "number", required: true },
+        { id: "b", type: "number", required: true }
+    ],
+
+    outputs: [
+        { id: "result", type: "number" }
+    ],
+
+    fn: (inputs) => ({
+        result: inputs['a'] + inputs['b']
+    })
+};
+
+export const multiplyBlock: Block = {
+    id: "multiply",
+    displayName: "Multiply",
+    category: "Math",
+
+    inputs: [
+        { id: "a", type: "number", required: true },
+        { id: "b", type: "number", required: true }
+    ],
+
+    outputs: [
+        { id: "result", type: "number" }
+    ],
+
+    fn: (inputs) => ({
+        result: inputs['a'] * inputs['b']
+    })
+};
+
+export const ifBlock: Block = {
+    id: "if",
+    displayName: "If",
+    category: "Logic",
+
+    inputs: [
+        { id: "condition", type: "boolean", required: true },
+        { id: "trueValue", type: "any", required: false },
+        { id: "falseValue", type: "any", required: false }
+    ],
+
+    outputs: [
+        { id: "result", type: "any" }
+    ],
+
+    fn: (inputs) => ({
+        result: inputs['condition']
+            ? inputs['trueValue']
+            : inputs['falseValue']
+    })
+};

@@ -12,6 +12,11 @@
     height: 50000px;
 
     touch-action: none;
+    cursor: default
+}
+
+.world:active{
+    cursor: grabbing;
 }
 
 // The grid that you see on the screen

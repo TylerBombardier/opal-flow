@@ -7,6 +7,9 @@
     width: 260px;
     height: 100%;
 
+    display: flex;
+    flex-direction: column;
+
     background: rgba(18, 18, 18, 0.96);
 
     border-right: 1px solid #2f2f2f;
@@ -24,8 +27,29 @@
     transform: translateX(-260px)
 }
 
-.palette-header{
+.palette-header {
+    position: relative;
+
+    flex-shrink: 0;
+
     margin-bottom: 10px;
+}
+
+.palette-content {
+    flex: 1;
+
+    overflow-y: auto;
+
+    padding-right: 6px;
+}
+
+.palette-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 4px;
 }
 
 .search {
@@ -42,8 +66,8 @@
 .collapse-button {
     position: absolute;
 
-    top: 16px;
-    right: -35px;
+    top: 5px;
+    right: -50px;
 
     width: 36px;
     height: 36px;
