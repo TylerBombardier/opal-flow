@@ -3,6 +3,7 @@ import { Graph } from '../graph/graph';
 import { registerBlocks, registry } from '../blocks';
 import { SlotType } from '../blocks/types';
 import { canConnect, coerce, validateWire } from '../graph/rules';
+import { EditorStateService } from './editor-state-service';
 
 
 @Injectable({
@@ -11,7 +12,9 @@ import { canConnect, coerce, validateWire } from '../graph/rules';
 export class GraphService {
     private graph: Graph;
 
-    constructor(){
+    constructor(
+        private editorState: EditorStateService
+    ){
         registerBlocks(); // Loads all predefined blocks
         this.graph = new Graph(registry);
     }
@@ -31,7 +34,12 @@ export class GraphService {
         this.graph = new Graph(registry);
     }
 
-    addInstance(blockId: string, params: Record<string, any> = {}) {
+    addInstance(
+        blockId: string, 
+        params: Record<string, any> = {},
+        x?: number, 
+        y?: number, 
+    ) {
         const id = crypto.randomUUID(); // Generates an ID for that instance
 
         const block = this.graph.registry.get(blockId);
@@ -40,6 +48,16 @@ export class GraphService {
         if (!block) {
             throw new Error(`Block not found: ${blockId}`);
         }
+
+        // If no positions are provided, assume the screen center.
+        if(x == null || y == null){
+            const position = this.editorState.getViewportCenterWorldPosition();
+            x = position.x;
+            y = position.y;
+        }
+
+        const finalX = x;
+        const finalY = y;
 
         const finalParams: Record<string, any> = {};
 
@@ -61,10 +79,9 @@ export class GraphService {
             id,
             blockId,
             params: finalParams,
-
             position: {
-                x: 100,
-                y: 100
+                x: finalX,
+                y: finalY
             }
         });
 

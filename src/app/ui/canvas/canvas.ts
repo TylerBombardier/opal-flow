@@ -30,7 +30,7 @@ export class Canvas implements AfterViewInit{
             canvas: true,
             contain: 'outside'
         });
-
+        
         // Buffers zoom requests to stop a bug that makes the camera jump around
         elem.addEventListener(
             'wheel',
