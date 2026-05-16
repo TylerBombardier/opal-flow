@@ -1,7 +1,8 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { GraphService } from '../../services/graph-service';
 import { BlockInstance } from "../block-instance/block-instance";
 import Panzoom from "@panzoom/panzoom";
+import { EditorStateService } from '../../services/editor-state-service';
 
 @Component({
   selector: 'app-canvas',
@@ -9,8 +10,8 @@ import Panzoom from "@panzoom/panzoom";
   templateUrl: './canvas.html',
   styleUrl: './canvas.scss',
 })
-export class Canvas implements AfterViewInit{
-    constructor(public graphService: GraphService){}
+export class Canvas implements AfterViewInit, OnInit{
+    constructor(public graphService: GraphService, public editorState: EditorStateService){}
 
     @ViewChild('world')
     world!: ElementRef<HTMLDivElement>;
@@ -18,6 +19,10 @@ export class Canvas implements AfterViewInit{
     // Keeps track of user action
     isPanning = false;
     zooming = false;
+
+    ngOnInit() {
+        this.onResize();
+    }
 
     ngAfterViewInit() {
 
@@ -30,7 +35,22 @@ export class Canvas implements AfterViewInit{
             canvas: true,
             contain: 'outside'
         });
-        
+
+        elem.addEventListener(
+            'panzoomchange',
+            (event: any) => {
+
+                this.editorState.zoom =
+                    event.detail.scale;
+
+                this.editorState.panX =
+                    event.detail.x;
+
+                this.editorState.panY =
+                    event.detail.y;
+            }
+        );
+
         // Buffers zoom requests to stop a bug that makes the camera jump around
         elem.addEventListener(
             'wheel',
@@ -66,6 +86,12 @@ export class Canvas implements AfterViewInit{
                 this.isPanning = false;
             }
         );
+    }
+
+    @HostListener('window:resize')
+    onResize(){
+        this.editorState.viewportWidth = window.innerWidth
+        this.editorState.viewportHeight = window.innerHeight
     }
 
     // Returns all instances currently in the graph
