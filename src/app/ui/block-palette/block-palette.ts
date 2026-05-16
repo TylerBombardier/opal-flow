@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { GraphService } from '../../services/graph-service';
 import { FormsModule } from '@angular/forms';
 import { KeyValuePipe } from '@angular/common'
@@ -12,8 +12,11 @@ import { KeyValuePipe } from '@angular/common'
 export class BlockPalette {
     constructor(public graphService: GraphService){}
 
-    categoryOpen = new Set<string>();
+    // Palette Events 
+    @Output() spawn = new EventEmitter<string>();
 
+    // Palette State Variables
+    categoryOpen = new Set<string>();
     search = ""
     isOpen = true;
 
@@ -70,7 +73,8 @@ export class BlockPalette {
         return groups;
     }
 
-    spawn(blockId: string){
-        this.graphService.addInstance(blockId)
+    // Emits that a block was clicked
+    onClick(blockId: string){
+        this.spawn.emit(blockId);
     }
 }

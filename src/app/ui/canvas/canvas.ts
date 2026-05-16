@@ -88,6 +88,7 @@ export class Canvas implements AfterViewInit, OnInit{
         );
     }
 
+    // Updates the current viewport size
     @HostListener('window:resize')
     onResize(){
         this.editorState.viewportWidth = window.innerWidth

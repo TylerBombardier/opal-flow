@@ -47,7 +47,7 @@
                 @if (isCategoryOpen(group.key)) {
                     @for (block of group.value; track block.id) {
 
-                    <div class="block-item">
+                    <div class="block-item" (click)="onClick(block.id)">
                         <div class="block-name">
                             {{ block.displayName ?? block.id }}
                         </div>
