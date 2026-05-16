@@ -18,7 +18,7 @@ export class EditorStateService {
     viewportWidth = window.innerWidth;
     viewportHeight = window.innerHeight;
 
-    getViewportCenterWorldPosition() {
+    get viewportCenter() {
         return {
             x:( this.viewportWidth / 2 - this.panX ) / this.zoom,
 

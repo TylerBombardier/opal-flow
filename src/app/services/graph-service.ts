@@ -51,7 +51,7 @@ export class GraphService {
 
         // If no positions are provided, assume the screen center.
         if(x == null || y == null){
-            const position = this.editorState.getViewportCenterWorldPosition();
+            const position = this.editorState.viewportCenter;
             x = position.x;
             y = position.y;
         }

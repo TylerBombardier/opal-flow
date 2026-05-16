@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { GraphService } from '../../services/graph-service';
 import { Canvas } from "../../ui/canvas/canvas";
 import { BlockPalette } from "../../ui/block-palette/block-palette";
+import { EditorControllerService } from '../../controllers/editor-controller-service/editor-controller-service';
 
 @Component({
   selector: 'app-lab',
@@ -11,12 +12,7 @@ import { BlockPalette } from "../../ui/block-palette/block-palette";
 })
 export class Lab {
     
-    constructor(private graphService: GraphService){
-    }
-
-    // Asks the Graph Service to spawn an instance
-    spawnBlock(blockId: string){
-        this.graphService.addInstance(blockId)
+    constructor(public editorController: EditorControllerService){
     }
 
     /**
