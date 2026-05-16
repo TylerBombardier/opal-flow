@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { GraphService } from '../../services/graph-service';
 import { Canvas } from "../../ui/canvas/canvas";
 import { BlockPalette } from "../../ui/block-palette/block-palette";
-import { EditorControllerService } from '../../controllers/editor-controller-service/editor-controller-service';
+import { EditorControllerService } from '../../services/editor-controller-service';
 
 @Component({
   selector: 'app-lab',
@@ -12,7 +11,7 @@ import { EditorControllerService } from '../../controllers/editor-controller-ser
 })
 export class Lab {
     
-    constructor(public editorController: EditorControllerService){
+    constructor(public editorControllerService: EditorControllerService){
     }
 
     /**
