@@ -35,10 +35,12 @@ export class GraphService {
     }
 
     addInstance(
-        blockId: string, 
-        params: Record<string, any> = {},
-        x?: number, 
-        y?: number, 
+        blockId: string,
+        options: {
+            params?: Record<string, any>;
+            x?: number;
+            y?: number;
+        } = {}
     ) {
         const id = crypto.randomUUID(); // Generates an ID for that instance
 
@@ -49,11 +51,14 @@ export class GraphService {
             throw new Error(`Block not found: ${blockId}`);
         }
 
+        let x = options.x;
+        let y = options.y;
+
         // If no positions are provided, assume the screen center.
         if(x == null || y == null){
-            const position = this.editorState.viewportCenter;
-            x = position.x;
-            y = position.y;
+            const center = this.editorState.viewportCenter;
+            x = center.x;
+            y = center.y;
         }
 
         const finalX = x;
@@ -64,9 +69,7 @@ export class GraphService {
         for (const slot of block.params ?? []) {
 
             // Coerces parameter values on instantiation
-            const raw =
-                params[slot.id] ??
-                slot.defaultValue;
+            const raw = options.params?.[slot.id] ?? slot.defaultValue;
 
             finalParams[slot.id] = coerce(
                 raw,

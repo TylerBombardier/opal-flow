@@ -15,7 +15,6 @@ export type Instance = {
     blockId: BlockID;
     params: Record<string,any>,
     position: Position
-    
 }
 
 export type Position = {
