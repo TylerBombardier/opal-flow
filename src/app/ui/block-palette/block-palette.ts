@@ -75,6 +75,7 @@ export class BlockPalette {
 
     // Emits that a block was clicked
     onClick(blockId: string){
+        console.log("Palette Clicked: "+blockId)
         this.spawn.emit(blockId);
     }
 }

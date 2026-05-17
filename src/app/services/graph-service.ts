@@ -52,6 +52,12 @@ export class GraphService {
 
         const pos = options.position ?? this.editorState.viewportCenter;
 
+        console.log('=== SPAWN DEBUG ===');
+        console.log('Transform:', this.editorState.transform);
+        console.log('Viewport size:', this.editorState.viewportWidth, this.editorState.viewportHeight);
+        console.log('Calculated center:', pos);
+        console.log('==================');
+
         const finalParams: Record<string, any> = {};
 
         for (const slot of block.params ?? []) {

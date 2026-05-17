@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Canvas } from "../../ui/canvas/canvas";
 import { BlockPalette } from "../../ui/block-palette/block-palette";
 import { EditorControllerService } from '../../services/editor-controller-service';
@@ -14,6 +14,9 @@ export class Lab implements OnInit{
     
     constructor(public graphService: GraphService, public editorControllerService: EditorControllerService){
     }
+
+    @ViewChild('canvas')
+    canvas!: Canvas;
 
     ngOnInit() {
         // this.runTests();

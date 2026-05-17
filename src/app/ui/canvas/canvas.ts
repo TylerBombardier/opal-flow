@@ -33,20 +33,21 @@ export class Canvas implements AfterViewInit, OnInit{
         const panzoom = Panzoom(elem, {
             maxScale: 3,
             minScale: 0.5,
-            canvas: true,
-            contain: 'outside'
+            startX: -25000 + this.editorState.viewportWidth / 2,  // Center the 50000px world
+            startY: -25000 + this.editorState.viewportHeight / 2,
         });
 
-        elem.addEventListener(
-            'panzoomchange',
-            (event: any) => {
-                this.editorState.transform = {
-                    x: event.detail.x,
-                    y: event.detail.y,
-                    scale: event.detail.scale
-                }
-            }
-        );
+        elem.addEventListener('panzoomchange', (event: any) => {
+            this.editorState.transform = {
+                x: event.detail.x,
+                y: event.detail.y,
+                scale: event.detail.scale
+            };
+            
+            console.log('=== PANZOOM CHANGE ===');
+            console.log('Transform:', this.editorState.transform);
+            console.log('Viewport center (world coords):', this.editorState.viewportCenter);
+        });
 
         // Buffers zoom requests to stop a bug that makes the camera jump around
         elem.addEventListener(
@@ -90,21 +91,6 @@ export class Canvas implements AfterViewInit, OnInit{
     onResize(){
         this.editorState.viewportWidth = window.innerWidth
         this.editorState.viewportHeight = window.innerHeight
-    }
-
-    spawnAtCenter(blockId: string) {
-
-        const rect = this.world.nativeElement.getBoundingClientRect();
-
-        const screenX = rect.width / 2;
-        const screenY = rect.height / 2;
-
-        const transform = this.editorState.transform;
-
-        const x = (screenX - transform.x) / transform.scale;
-        const y = (screenY - transform.y) / transform.scale;
-
-        this.editorController.spawnBlockAtCenter(blockId);
     }
 
     // Returns all instances currently in the graph

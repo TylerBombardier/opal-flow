@@ -21,9 +21,8 @@ export class EditorStateService {
 
     get viewportCenter() {
         return {
-            x:( this.viewportWidth / 2 - this.transform.x ) / this.transform.scale,
-
-            y:( this.viewportHeight / 2 - this.transform.y ) / this.transform.scale
+            x: (this.viewportWidth / 2 - this.transform.x) / this.transform.scale,
+            y: (this.viewportHeight / 2 - this.transform.y) / this.transform.scale
         };
     }
 }
