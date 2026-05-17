@@ -38,8 +38,7 @@ export class GraphService {
         blockId: string,
         options: {
             params?: Record<string, any>;
-            x?: number;
-            y?: number;
+            position?: { x: number, y: number }
         } = {}
     ) {
         const id = crypto.randomUUID(); // Generates an ID for that instance
@@ -51,18 +50,7 @@ export class GraphService {
             throw new Error(`Block not found: ${blockId}`);
         }
 
-        let x = options.x;
-        let y = options.y;
-
-        // If no positions are provided, assume the screen center.
-        if(x == null || y == null){
-            const center = this.editorState.viewportCenter;
-            x = center.x;
-            y = center.y;
-        }
-
-        const finalX = x;
-        const finalY = y;
+        const pos = options.position ?? this.editorState.viewportCenter;
 
         const finalParams: Record<string, any> = {};
 
@@ -76,15 +64,15 @@ export class GraphService {
                 slot.type ?? "any"
             );
         }
-
+        
         // Adds instance to graph
         this.graph.instances.set(id, {
             id,
             blockId,
             params: finalParams,
             position: {
-                x: finalX,
-                y: finalY
+                x: pos.x,
+                y: pos.y
             }
         });
 

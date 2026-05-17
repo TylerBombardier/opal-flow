@@ -3,6 +3,7 @@ import { GraphService } from '../../services/graph-service';
 import { BlockInstance } from "../block-instance/block-instance";
 import Panzoom from "@panzoom/panzoom";
 import { EditorStateService } from '../../services/editor-state-service';
+import { EditorControllerService } from '../../services/editor-controller-service';
 
 @Component({
   selector: 'app-canvas',
@@ -11,7 +12,7 @@ import { EditorStateService } from '../../services/editor-state-service';
   styleUrl: './canvas.scss',
 })
 export class Canvas implements AfterViewInit, OnInit{
-    constructor(public graphService: GraphService, public editorState: EditorStateService){}
+    constructor(public graphService: GraphService, public editorState: EditorStateService, public editorController: EditorControllerService){}
 
     @ViewChild('world')
     world!: ElementRef<HTMLDivElement>;
@@ -39,15 +40,11 @@ export class Canvas implements AfterViewInit, OnInit{
         elem.addEventListener(
             'panzoomchange',
             (event: any) => {
-
-                this.editorState.zoom =
-                    event.detail.scale;
-
-                this.editorState.panX =
-                    event.detail.x;
-
-                this.editorState.panY =
-                    event.detail.y;
+                this.editorState.transform = {
+                    x: event.detail.x,
+                    y: event.detail.y,
+                    scale: event.detail.scale
+                }
             }
         );
 
@@ -58,7 +55,7 @@ export class Canvas implements AfterViewInit, OnInit{
 
                 event.preventDefault();
 
-                if (this.zooming) {
+                if (this.zooming || this.isPanning) {
                     return;
                 }
 
@@ -93,6 +90,21 @@ export class Canvas implements AfterViewInit, OnInit{
     onResize(){
         this.editorState.viewportWidth = window.innerWidth
         this.editorState.viewportHeight = window.innerHeight
+    }
+
+    spawnAtCenter(blockId: string) {
+
+        const rect = this.world.nativeElement.getBoundingClientRect();
+
+        const screenX = rect.width / 2;
+        const screenY = rect.height / 2;
+
+        const transform = this.editorState.transform;
+
+        const x = (screenX - transform.x) / transform.scale;
+        const y = (screenY - transform.y) / transform.scale;
+
+        this.editorController.spawnBlockAtCenter(blockId);
     }
 
     // Returns all instances currently in the graph

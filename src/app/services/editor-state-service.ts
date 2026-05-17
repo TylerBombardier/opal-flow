@@ -4,10 +4,11 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class EditorStateService {
-    panX = 0;
-    panY = 0;
-
-    zoom = 1;
+    transform = {
+        x: 0,
+        y: 0,
+        scale: 1
+    }
 
     selectedInstances = new Set<string>();
 
@@ -20,9 +21,9 @@ export class EditorStateService {
 
     get viewportCenter() {
         return {
-            x:( this.viewportWidth / 2 - this.panX ) / this.zoom,
+            x:( this.viewportWidth / 2 - this.transform.x ) / this.transform.scale,
 
-            y:( this.viewportHeight / 2 - this.panY ) / this.zoom
+            y:( this.viewportHeight / 2 - this.transform.y ) / this.transform.scale
         };
     }
 }
