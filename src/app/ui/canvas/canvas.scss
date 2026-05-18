@@ -1,20 +1,19 @@
+// The world that's being transformed
 .canvas {
     position: fixed;
     inset: 0;
     background: #1e1e1e;
 }
 
-// The world that's being transformed
 .world {
-    position: relative;
+    position: absolute;
+    left: 0;
+    top: 0;
 
-    width: 50000px;
-    height: 50000px;
+    width: 2000px;
+    height: 2000px;
 
     transform-origin: 0 0;
-
-    touch-action: none;
-    cursor: default
 }
 
 .world:active{

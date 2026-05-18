@@ -50,7 +50,7 @@ export class GraphService {
             throw new Error(`Block not found: ${blockId}`);
         }
 
-        const pos = options.position ?? this.editorState.viewportCenter;
+        const pos = options.position ?? this.editorState.viewportCenterWorld;
 
         console.log('=== SPAWN DEBUG ===');
         console.log('Transform:', this.editorState.transform);

@@ -11,7 +11,7 @@ import { EditorControllerService } from '../../services/editor-controller-servic
   templateUrl: './canvas.html',
   styleUrl: './canvas.scss',
 })
-export class Canvas implements AfterViewInit, OnInit{
+export class Canvas implements AfterViewInit{
     constructor(public graphService: GraphService, public editorState: EditorStateService, public editorController: EditorControllerService){}
 
     @ViewChild('world')
@@ -21,10 +21,6 @@ export class Canvas implements AfterViewInit, OnInit{
     isPanning = false;
     zooming = false;
 
-    ngOnInit() {
-        this.onResize();
-    }
-
     ngAfterViewInit() {
 
         const elem = this.world.nativeElement;
@@ -33,8 +29,8 @@ export class Canvas implements AfterViewInit, OnInit{
         const panzoom = Panzoom(elem, {
             maxScale: 3,
             minScale: 0.5,
-            startX: -25000 + this.editorState.viewportWidth / 2,  // Center the 50000px world
-            startY: -25000 + this.editorState.viewportHeight / 2,
+            startX: -1000 + this.editorState.viewportWidth / 2,
+            startY: -1000 + this.editorState.viewportHeight / 2
         });
 
         elem.addEventListener('panzoomchange', (event: any) => {
@@ -46,30 +42,27 @@ export class Canvas implements AfterViewInit, OnInit{
             
             console.log('=== PANZOOM CHANGE ===');
             console.log('Transform:', this.editorState.transform);
-            console.log('Viewport center (world coords):', this.editorState.viewportCenter);
+            console.log('Viewport center (world coords):', this.editorState.viewportCenterWorld);
         });
 
-        // Buffers zoom requests to stop a bug that makes the camera jump around
-        elem.addEventListener(
-            'wheel',
-            (event) => {
+        /** Removed Feature. Zoom was giving me way too many complications. 
+        Buffers zoom requests to stop a bug that makes the camera jump around
+        elem.addEventListener('wheel', (event) => {
+            event.preventDefault();
 
-                event.preventDefault();
-
-                if (this.zooming || this.isPanning) {
-                    return;
-                }
-
-                this.zooming = true;
-
-                requestAnimationFrame(() => {
-                    panzoom.zoomWithWheel(event);
-                    this.zooming = false;
-                });
-
+            if (this.zooming || this.isPanning) {
+                return;
             }
-        );
 
+            this.zooming = true;
+
+            requestAnimationFrame(() => {
+                panzoom.zoomWithWheel(event);
+                this.zooming = false;
+            });
+        });
+        */
+        
         // Prevents zooming and panning at the same to stop a bug that makes the world disappear
         elem.addEventListener(
             'panzoomstart',
@@ -86,12 +79,15 @@ export class Canvas implements AfterViewInit, OnInit{
         );
     }
 
-    // Updates the current viewport size
-    @HostListener('window:resize')
-    onResize(){
-        this.editorState.viewportWidth = window.innerWidth
-        this.editorState.viewportHeight = window.innerHeight
+    private get worldCenter() {
+        const rect = this.world.nativeElement.getBoundingClientRect();
+
+        const screenCenterX = rect.width / 2;
+        const screenCenterY = rect.height / 2;
+
+        return this.editorState.screenToWorld(screenCenterX, screenCenterY);
     }
+
 
     // Returns all instances currently in the graph
     get instances(){

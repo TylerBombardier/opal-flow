@@ -19,10 +19,28 @@ export class EditorStateService {
     viewportWidth = window.innerWidth;
     viewportHeight = window.innerHeight;
 
-    get viewportCenter() {
-        return {
-            x: (this.viewportWidth / 2 - this.transform.x) / this.transform.scale,
-            y: (this.viewportHeight / 2 - this.transform.y) / this.transform.scale
-        };
+    get viewportCenterWorld() {
+        const screenX = this.viewportWidth / 2;
+        const screenY = this.viewportHeight / 2;
+
+        return this.screenToWorld(screenX, screenY);
+    }
+
+    get screenToWorld() {
+        const t = this.transform;
+
+        return (screenX: number, screenY: number) => ({
+            x: (screenX - t.x) / t.scale,
+            y: (screenY - t.y) / t.scale
+        });
+    }
+
+    get worldToScreen() {
+        const t = this.transform;
+
+        return (worldX: number, worldY: number) => ({
+            x: worldX * t.scale + t.x,
+            y: worldY * t.scale + t.y
+        });
     }
 }
