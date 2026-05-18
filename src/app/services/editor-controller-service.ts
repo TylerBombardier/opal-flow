@@ -9,10 +9,10 @@ export class EditorControllerService {
     constructor(public graphService: GraphService, public editorState: EditorStateService){}
 
     spawnBlockAtCenter(blockId: string) {
-        const pos = this.editorState.viewportCenterWorld;
+        const center = this.editorState.viewportCenterWorld;
 
         this.graphService.addInstance(blockId, {
-            position: pos
+            position: center
         });
     }
 }

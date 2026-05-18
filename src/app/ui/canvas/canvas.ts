@@ -79,15 +79,6 @@ export class Canvas implements AfterViewInit{
         );
     }
 
-    private get worldCenter() {
-        const rect = this.world.nativeElement.getBoundingClientRect();
-
-        const screenCenterX = rect.width / 2;
-        const screenCenterY = rect.height / 2;
-
-        return this.editorState.screenToWorld(screenCenterX, screenCenterY);
-    }
-
 
     // Returns all instances currently in the graph
     get instances(){
