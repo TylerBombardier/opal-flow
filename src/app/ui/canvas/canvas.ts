@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { GraphService } from '../../services/graph-service';
 import { BlockInstance } from "../block-instance/block-instance";
-import Panzoom from "@panzoom/panzoom";
+import Panzoom, { PanzoomOptions } from "@panzoom/panzoom";
 import { EditorStateService } from '../../services/editor-state-service';
 import { EditorControllerService } from '../../services/editor-controller-service';
 
@@ -25,13 +25,17 @@ export class Canvas implements AfterViewInit{
 
         const elem = this.world.nativeElement;
 
-        // Initializing Panzoom on the 'world' element
-        const panzoom = Panzoom(elem, {
+        // Panzoom options
+        const options: PanzoomOptions = {
             maxScale: 3,
             minScale: 0.5,
             startX: -1000 + this.editorState.viewportWidth / 2,
-            startY: -1000 + this.editorState.viewportHeight / 2
-        });
+            startY: -1000 + this.editorState.viewportHeight / 2,
+            excludeClass: "panzoom-exclude"
+        }
+
+        // Initializing Panzoom on the 'world' element
+        const panzoom = Panzoom(elem, options);
 
         elem.addEventListener('panzoomchange', (event: any) => {
             this.editorState.transform = {

@@ -1,3 +1,28 @@
+.block-header {
+    cursor: grab;
+    user-select: none;
+}
+
+input {
+    width: 100%;
+    padding: 5px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #2a2a2a;
+    color: white;
+    outline: 1px solid #555;
+}
+
+.block-header:active {
+    cursor: grabbing;
+}
+
+.block-body {
+    cursor: default;
+}
+
 .block-instance {
     position: absolute;
 
@@ -8,6 +33,4 @@
     border-radius: 8px;
 
     color: white;
-
-    padding: 12px;
 }

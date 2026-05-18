@@ -3,6 +3,17 @@
     [style.left.px]="instance.position.x"
     [style.top.px]="instance.position.y"
 >
-    {{ block.id }}
-    <div style="font-size: 10px;">x: {{instance.position.x}}, y: {{instance.position.y}}</div>
+    <div
+        class="block-header"
+        (pointerdown)="onMouseDown($event)"
+    >
+        {{ block.id }}
+    </div>
+
+    <div
+        class="block-body panzoom-exclude"
+    >
+        <input type="text">
+        <div style="font-size: 10px;">x: {{instance.position.x}}, y: {{instance.position.y}}</div>
+    </div>
 </div>

@@ -17,4 +17,9 @@ export class BlockInstance {
     get block(){
         return this.graphService.getGraph().registry.get(this.instance.blockId)
     }
+
+    onMouseDown(event: MouseEvent){
+        event.preventDefault()
+        event.stopPropagation()
+    }
 }
