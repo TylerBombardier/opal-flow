@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Host, HostListener, OnInit, ViewChild } from '@angular/core';
 import { GraphService } from '../../services/graph-service';
 import { BlockInstance } from "../block-instance/block-instance";
 import Panzoom, { PanzoomOptions } from "@panzoom/panzoom";
@@ -43,10 +43,6 @@ export class Canvas implements AfterViewInit{
                 y: event.detail.y,
                 scale: event.detail.scale
             };
-            
-            console.log('=== PANZOOM CHANGE ===');
-            console.log('Transform:', this.editorState.transform);
-            console.log('Viewport center (world coords):', this.editorState.viewportCenterWorld);
         });
 
         /** Removed Feature. Zoom was giving me way too many complications. 
@@ -67,11 +63,13 @@ export class Canvas implements AfterViewInit{
         });
         */
         
+        
         // Prevents zooming and panning at the same to stop a bug that makes the world disappear
         elem.addEventListener(
             'panzoomstart',
             () => {
                 this.isPanning = true;
+                elem.style.cursor = "grabbing"
             }
         );
 
@@ -79,10 +77,38 @@ export class Canvas implements AfterViewInit{
             'panzoomend',
             () => {
                 this.isPanning = false;
+                elem.style.cursor = "default"
             }
         );
     }
 
+    @HostListener('document:pointermove',['$event'])
+    onPointerMove(event: PointerEvent){
+        const id = this.editorState.draggingInstanceId
+
+        if(!id){
+            return
+        }
+
+        const instance = this.graphService.getGraph().instances.get(id);
+
+        if(!instance){
+            return
+        }
+
+        const mouse = this.editorState.screenToWorld(
+            event.clientX,
+            event.clientY
+        );
+
+        instance.position.x = mouse.x - this.editorState.dragOffset.x
+        instance.position.y = mouse.y - this.editorState.dragOffset.y
+    }
+
+    @HostListener('document:pointerup')
+    onPointerUp(){
+        this.editorState.draggingInstanceId = null;
+    }
 
     // Returns all instances currently in the graph
     get instances(){

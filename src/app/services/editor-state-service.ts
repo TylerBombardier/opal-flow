@@ -14,6 +14,11 @@ export class EditorStateService {
 
     draggingInstanceId: string | null = null;
 
+    dragOffset = {
+        x: 0,
+        y: 0,
+    }
+
     hoveredInstanceId: string | null = null;
 
     viewportWidth = window.innerWidth;
