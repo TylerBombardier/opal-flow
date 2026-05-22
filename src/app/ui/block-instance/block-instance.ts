@@ -20,26 +20,14 @@ export class BlockInstance {
         return this.graphService.getGraph().registry.get(this.instance.blockId)
     }
 
-    onHandleGrab(event: MouseEvent){
+    onHandleGrab(event: PointerEvent){
         event.preventDefault()
         event.stopPropagation()
 
-        const mouse = this.editorState.screenToWorld(
-            event.clientX,
-            event.clientY
-        )
-
-        this.editorState.draggingInstanceId = this.instance.id
-
-        this.editorController.bringInstanceToFront(this.instance.id)
-
-        this.editorState.dragOffset = {
-            x: mouse.x - this.instance.position.x,
-            y: mouse.y - this.instance.position.y
-        }
+        this.editorController.onCanvasPointerDown(this.instance, event)
     }
 
-    onFocus(event: MouseEvent){
+    onFocus(event: PointerEvent){
         event.preventDefault()
         event.stopPropagation()
 
