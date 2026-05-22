@@ -34,7 +34,7 @@ export class EditorControllerService {
         });
     }
 
-    onCanvasPointerDown(instance: Instance, event: PointerEvent){
+    onHandleGrab(instance: Instance, event: PointerEvent){
         const mouse = this.editorState.screenToWorld(
             event.clientX,
             event.clientY
@@ -50,7 +50,7 @@ export class EditorControllerService {
         }
     }
 
-    onCanvasPointerMove(event: PointerEvent){
+    onHandleDrag(event: PointerEvent){
         const id = this.editorState.draggingInstanceId
 
         if(!id){
@@ -77,7 +77,7 @@ export class EditorControllerService {
         instance.position.y = snapped.y
     }
 
-    onCanvasPointerUp(){
+    onHandleDrop(){
         this.editorState.draggingInstanceId = null;
     }
 }

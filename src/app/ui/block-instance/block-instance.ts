@@ -24,7 +24,7 @@ export class BlockInstance {
         event.preventDefault()
         event.stopPropagation()
 
-        this.editorController.onCanvasPointerDown(this.instance, event)
+        this.editorController.onHandleGrab(this.instance, event)
     }
 
     onFocus(event: PointerEvent){
