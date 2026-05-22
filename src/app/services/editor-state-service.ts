@@ -10,6 +10,10 @@ export class EditorStateService {
         scale: 1
     }
 
+    gridSize = 32;
+
+    snappingEnabled = true;
+
     selectedInstances = new Set<string>();
 
     instanceZIndexs = new Map<string, number>();
@@ -29,6 +33,20 @@ export class EditorStateService {
 
     viewportWidth = window.innerWidth;
     viewportHeight = window.innerHeight;
+
+    snapPosition(
+        x: number,
+        y: number
+    ){
+        if(!this.snappingEnabled){
+            return { x, y }
+        }
+
+        return {
+            x: Math.round(x / this.gridSize ) * this.gridSize,
+            y: Math.round(x / this.gridSize ) * this.gridSize
+        }
+    }
 
     get viewportCenterWorld() {
         const screenX = this.viewportWidth / 2;
