@@ -10,7 +10,7 @@ export class EditorStateService {
         scale: 1
     }
 
-    gridSize = 32;
+    gridSize = 16;
 
     snappingEnabled = true;
 
