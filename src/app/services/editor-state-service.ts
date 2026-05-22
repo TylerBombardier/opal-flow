@@ -44,7 +44,7 @@ export class EditorStateService {
 
         return {
             x: Math.round(x / this.gridSize ) * this.gridSize,
-            y: Math.round(x / this.gridSize ) * this.gridSize
+            y: Math.round(y / this.gridSize ) * this.gridSize
         }
     }
 

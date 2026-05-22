@@ -50,9 +50,14 @@ export class EditorControllerService {
             event.clientX,
             event.clientY
         );
+        
+        const newXPos = mouse.x - this.editorState.dragOffset.x;
+        const newYPos = mouse.y - this.editorState.dragOffset.y;
 
-        instance.position.x = mouse.x - this.editorState.dragOffset.x
-        instance.position.y = mouse.y - this.editorState.dragOffset.y
+        const snapped = this.editorState.snapPosition(newXPos,newYPos)
+
+        instance.position.x = snapped.x
+        instance.position.y = snapped.y
     }
 
     onCanvasPointerUp(){
