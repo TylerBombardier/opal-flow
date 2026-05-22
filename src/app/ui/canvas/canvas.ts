@@ -17,12 +17,12 @@ export class Canvas implements AfterViewInit{
     @ViewChild('world')
     world!: ElementRef<HTMLDivElement>;
 
-    // Keeps track of user action
+    // Keeps track if the user is panning or zooming
     isPanning = false;
     zooming = false;
 
     ngAfterViewInit() {
-
+        // The element that contains the transforming world
         const elem = this.world.nativeElement;
 
         // Panzoom options
@@ -37,6 +37,7 @@ export class Canvas implements AfterViewInit{
         // Initializing Panzoom on the 'world' element
         const panzoom = Panzoom(elem, options);
 
+        // Keeps track of panzoom state
         elem.addEventListener('panzoomchange', (event: any) => {
             this.editorState.transform = {
                 x: event.detail.x,
@@ -64,7 +65,7 @@ export class Canvas implements AfterViewInit{
         */
         
         
-        // Prevents zooming and panning at the same to stop a bug that makes the world disappear
+        // Detects If the user is panning
         elem.addEventListener(
             'panzoomstart',
             () => {
@@ -82,6 +83,7 @@ export class Canvas implements AfterViewInit{
         );
     }
 
+    // Handles dragging the current instance.
     @HostListener('document:pointermove',['$event'])
     onPointerMove(event: PointerEvent){
         const id = this.editorState.draggingInstanceId
@@ -105,6 +107,7 @@ export class Canvas implements AfterViewInit{
         instance.position.y = mouse.y - this.editorState.dragOffset.y
     }
 
+    // Handles stopping the instance from being dragged.
     @HostListener('document:pointerup')
     onPointerUp(){
         this.editorState.draggingInstanceId = null;
