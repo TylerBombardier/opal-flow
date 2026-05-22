@@ -2,10 +2,12 @@
     class="block-instance"
     [style.left.px]="instance.position.x"
     [style.top.px]="instance.position.y"
+    [style.z-index]="editorState.instanceZIndexs.get(instance.id) ?? 1"
+    (pointerdown)="onFocus($event)"
 >
     <div
         class="block-header"
-        (pointerdown)="onMouseDown($event)"
+        (pointerdown)="onHandleGrab($event)"
     >
         {{ block.id }}
     </div>

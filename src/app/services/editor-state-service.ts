@@ -12,6 +12,12 @@ export class EditorStateService {
 
     selectedInstances = new Set<string>();
 
+    instanceZIndexs = new Map<string, number>();
+
+    nextZIndex = 1;
+
+    lastBroughtForward: string | null = null;
+
     draggingInstanceId: string | null = null;
 
     dragOffset = {
