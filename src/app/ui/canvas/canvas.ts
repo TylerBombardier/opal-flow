@@ -86,31 +86,13 @@ export class Canvas implements AfterViewInit{
     // Handles dragging the current instance.
     @HostListener('document:pointermove',['$event'])
     onPointerMove(event: PointerEvent){
-        const id = this.editorState.draggingInstanceId
-
-        if(!id){
-            return
-        }
-
-        const instance = this.graphService.getGraph().instances.get(id);
-
-        if(!instance){
-            return
-        }
-
-        const mouse = this.editorState.screenToWorld(
-            event.clientX,
-            event.clientY
-        );
-
-        instance.position.x = mouse.x - this.editorState.dragOffset.x
-        instance.position.y = mouse.y - this.editorState.dragOffset.y
+        this.editorController.onCanvasPointerMove(event)
     }
 
     // Handles stopping the instance from being dragged.
     @HostListener('document:pointerup')
     onPointerUp(){
-        this.editorState.draggingInstanceId = null;
+        this.editorController.onCanvasPointerUp()
     }
 
     // Returns all instances currently in the graph

@@ -11,6 +11,7 @@ export class EditorControllerService {
     spawnBlockAtCenter(blockId: string) {
         const center = this.editorState.snapPosition(this.editorState.viewportCenterWorld.x,this.editorState.viewportCenterWorld.y);
 
+        // Spawns instance the center of the screen
         this.graphService.addInstance(blockId, {
             position: center
         });
@@ -30,5 +31,31 @@ export class EditorControllerService {
 
         // Logs the latest brought forward instance
         this.editorState.lastBroughtForward = instanceId
+    }
+
+    onCanvasPointerMove(event: PointerEvent){
+        const id = this.editorState.draggingInstanceId
+
+        if(!id){
+            return
+        }
+
+        const instance = this.graphService.getGraph().instances.get(id);
+
+        if(!instance){
+            return
+        }
+
+        const mouse = this.editorState.screenToWorld(
+            event.clientX,
+            event.clientY
+        );
+
+        instance.position.x = mouse.x - this.editorState.dragOffset.x
+        instance.position.y = mouse.y - this.editorState.dragOffset.y
+    }
+
+    onCanvasPointerUp(){
+        this.editorState.draggingInstanceId = null;
     }
 }
