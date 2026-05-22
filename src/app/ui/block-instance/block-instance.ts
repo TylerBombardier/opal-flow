@@ -21,16 +21,11 @@ export class BlockInstance {
     }
 
     onHandleGrab(event: PointerEvent){
-        event.preventDefault()
         event.stopPropagation()
-
         this.editorController.onHandleGrab(this.instance, event)
     }
 
     onFocus(event: PointerEvent){
-        event.preventDefault()
-        event.stopPropagation()
-
         this.editorController.bringInstanceToFront(this.instance.id)
     }
 }
