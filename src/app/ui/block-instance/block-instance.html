@@ -15,7 +15,11 @@
     <div
         class="block-body panzoom-exclude"
     >
-        <input type="text">
-        <div style="font-size: 10px;">x: {{instance.position.x}}, y: {{instance.position.y}}</div>
+        @for (param of block.params; track param.id ) {
+            <app-param-renderer
+                [instance]="instance"
+                [param]="param"
+            ></app-param-renderer>
+        }
     </div>
 </div>

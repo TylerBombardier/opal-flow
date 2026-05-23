@@ -1,0 +1,15 @@
+@if(param.ui?.type === 'textbox'){
+    <input
+        type="text"
+        [value]="instance.params[param.id]"
+        (input)="onTextboxInput($event)"
+    />
+}
+
+@if(param.ui?.type === 'checkbox'){
+    <input
+        type="checkbox"
+        [checked]="instance.params[param.id]"
+        (change)="onCheckboxChange($event)"
+    />
+}
