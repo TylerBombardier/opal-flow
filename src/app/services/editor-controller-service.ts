@@ -90,4 +90,18 @@ export class EditorControllerService {
             this.editorState.draggingInstanceId = null;
         }
     }
+
+    setParam(
+        instanceId: string,
+        paramId: string,
+        value: unknown
+    ){
+        const instance = this.graphService.getGraph().instances.get(instanceId);
+
+        if (!instance) {
+            return
+        }
+
+        instance.params[paramId] = value
+    }
 }

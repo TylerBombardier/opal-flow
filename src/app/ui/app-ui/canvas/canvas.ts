@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, ElementRef, Host, HostListener, OnInit, ViewChild } from '@angular/core';
-import { GraphService } from '../../services/graph-service';
-import { BlockInstance } from "../block-instance/block-instance";
+import { GraphService } from '../../../services/graph-service';
+import { BlockInstance } from "../../block-ui/block-instance/block-instance";
 import Panzoom, { PanzoomOptions } from "@panzoom/panzoom";
-import { EditorStateService } from '../../services/editor-state-service';
-import { EditorControllerService } from '../../services/editor-controller-service';
+import { EditorStateService } from '../../../services/editor-state-service';
+import { EditorControllerService } from '../../../services/editor-controller-service';
 
 @Component({
   selector: 'app-canvas',

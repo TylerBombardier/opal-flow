@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { GraphService } from '../../services/graph-service';
+import { GraphService } from '../../../services/graph-service';
 import { FormsModule } from '@angular/forms';
 import { KeyValuePipe } from '@angular/common'
 

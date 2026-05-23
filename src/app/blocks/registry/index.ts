@@ -1,5 +1,5 @@
-import { addBlock, booleanEchoBlock, concatBlock, findReplaceBlock, ifBlock, lowercaseBlock, multiplyBlock, numberBlock, reverseBlock, splitCaseBlock, textBlock, uppercaseBlock } from "./blocks";
-import { BlockRegistry } from "./registry/block-registry";
+import { addBlock, booleanEchoBlock, concatBlock, findReplaceBlock, ifBlock, lowercaseBlock, multiplyBlock, numberBlock, reverseBlock, splitCaseBlock, textBlock, uppercaseBlock } from "../blocks";
+import { BlockRegistry } from "./block-registry";
 
 export const registry = new BlockRegistry();
 

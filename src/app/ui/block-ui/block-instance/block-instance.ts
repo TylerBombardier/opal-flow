@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { GraphService } from '../../services/graph-service';
-import { Instance } from '../../graph/types';
-import { EditorStateService } from '../../services/editor-state-service';
-import { EditorControllerService } from '../../services/editor-controller-service';
+import { GraphService } from '../../../services/graph-service';
+import { Instance } from '../../../graph/types';
+import { EditorStateService } from '../../../services/editor-state-service';
+import { EditorControllerService } from '../../../services/editor-controller-service';
 import { ParamRenderer } from '../param-renderer/param-renderer';
 
 @Component({

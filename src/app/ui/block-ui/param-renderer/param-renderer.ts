@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
-import { Instance } from '../../graph/types';
-import { ParamSlot } from '../../blocks/types';
+import { Instance } from '../../../graph/types';
+import { ParamSlot } from '../../../blocks/types';
 
 @Component({
   selector: 'app-param-renderer',
