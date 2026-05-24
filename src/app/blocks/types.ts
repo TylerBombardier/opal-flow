@@ -1,4 +1,4 @@
-import { UIConfig } from "./ui-config";
+import { UIConfig } from "../ui/block-ui/components/ui-config";
 
 // All valid types for each slot
 export type SlotType = | "string" | "number" | "boolean" | "array" | "object" | "any"
