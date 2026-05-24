@@ -314,7 +314,10 @@ export const numberBlock: Block = {
         {
             id: "value",
             type: "number",
-            defaultValue: 0
+            defaultValue: 0,
+            ui: {
+                type: "textbox"
+            }
         }
     ],
 

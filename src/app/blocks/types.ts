@@ -28,7 +28,7 @@ export type OutputSlot = ValueSlot & {
 }
 
 export type ParamSlot = ValueSlot & {
-    ui?: UIConfig;
+    ui: UIConfig;
     editable?: boolean;
 }
 
