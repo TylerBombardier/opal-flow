@@ -27,11 +27,15 @@
     display: flex;
 }
 
-// Input Slots
+// Input Slots Styling
 
-.row{
-    display: flex;
+
+.row {
+    display: grid;
+    grid-template-columns: 10px 1fr 10px;
+    align-items: center;
 }
+
 
 .input-slot{
     width: 10px;
@@ -39,7 +43,7 @@
     background-color: red;
 }
 
-// Output Slots
+// Output Slots Styling
 
 .output-bar{
     height: 100%;
@@ -53,9 +57,14 @@
     background-color: blue;
 }
 
-// Param Slots
+// Block Container Styling
 
-.param{
+.container{
     padding-left: 8px;
     padding-right: 8px;
+}
+
+.label{
+    font-size: 0.7em;
+    color: rgba(255,255,255,0.5)
 }

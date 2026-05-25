@@ -9,7 +9,7 @@
         class="block-header"
         (pointerdown)="onHandleGrab($event)"
     >
-        {{ block.id }}
+        {{ block.displayName }}
     </div>
 
     <div
@@ -18,16 +18,28 @@
         <div class="wrapper">
             <div>
                 @for (row of rows; track row.id) {
+
                     <div class="row">
-                        @if(row.input){
+
+                        @if (row.input) {
                             <div class="input-slot"></div>
                         }
-                        @if(row.param){
-                            <div class="param">
-                                {{ row.param.ui.type }}
+
+                        <div class="container">
+                            <div class="label">
+                                {{ row.label }}
                             </div>
-                        }
+
+                            @if (row.param) {
+                                <div class="param">
+                                    {{ row.param.ui.type }}
+                                </div>
+                            }
+
+                        </div>
+
                     </div>
+
                 }
             </div>
             

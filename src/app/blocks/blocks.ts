@@ -97,6 +97,7 @@ export const reverseBlock: Block = {
         {
             id: "text",
             type: "string",
+            displayName: "Input",
             required: true
         }
     ],
@@ -144,6 +145,7 @@ export const concatBlock: Block = {
         {
             id: "text",
             type: "string",
+            displayName: "First Word",
             ui: {
                 type: "textbox"
             }
@@ -151,6 +153,7 @@ export const concatBlock: Block = {
         {
             id: "separator",
             type: "string",
+            displayName: "Seperator",
             ui: {
                 type: "textbox"
             }
@@ -158,6 +161,7 @@ export const concatBlock: Block = {
         {
             id: "text2",
             type: "string",
+            displayName: "Second Word",
             ui: {
                 type: "textbox"
             }

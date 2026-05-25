@@ -6,5 +6,4 @@ export type ValueRow = {
     
     input?: InputSlot
     param?: ParamSlot
-    output?: OutputSlot
 }

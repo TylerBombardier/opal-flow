@@ -32,7 +32,7 @@ export class BlockInstance {
 
             rows.push({
                 id: param.id,
-                label: param.id,
+                label: param.displayName ?? param.id,
 
                 param,
                 input: matchingInput
@@ -51,7 +51,7 @@ export class BlockInstance {
 
             rows.push({
                 id: input.id,
-                label: input.id,
+                label: input.displayName ?? input.id,
 
                 input
             });
