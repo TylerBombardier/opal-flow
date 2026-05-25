@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Graph } from '../graph/graph';
-import { registerBlocks, registry } from '../blocks/registry';
+import { registerBlocks, blockRegistry } from '../blocks/registry';
 import { SlotType } from '../blocks/types';
 import { canConnect, coerce, validateWire } from '../graph/rules';
 import { EditorStateService } from './editor-state-service';
@@ -15,8 +15,7 @@ export class GraphService {
     constructor(
         private editorState: EditorStateService
     ){
-        registerBlocks(); // Loads all predefined blocks
-        this.graph = new Graph(registry);
+        this.graph = new Graph(blockRegistry);
     }
 
 
@@ -31,7 +30,7 @@ export class GraphService {
     }
 
     reset(){
-        this.graph = new Graph(registry);
+        this.graph = new Graph(blockRegistry);
     }
 
     addInstance(
