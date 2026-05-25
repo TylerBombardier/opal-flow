@@ -3,7 +3,7 @@ import { GraphService } from '../../../services/graph-service';
 import { Instance } from '../../../graph/types';
 import { EditorStateService } from '../../../services/editor-state-service';
 import { EditorControllerService } from '../../../services/editor-controller-service';
-import { SlotRow } from '../types/slot-row';
+import { ValueRow } from '../types/slot-row';
 
 @Component({
   selector: 'app-block-instance',
@@ -22,36 +22,41 @@ export class BlockInstance {
     }
 
     get rows(){
-        const rows: SlotRow[] = []
-
-        for (const input of this.block.inputs) {
-            rows.push({
-                kind: "input",
-                id: input.id,
-                label: input.id,
-                type: input.type
-            });
-        }
+        const rows: ValueRow[] = []
 
         for (const param of this.block.params ?? []) {
+
+            const matchingInput = this.block.inputs.find(
+                input => input.id === param.id
+            );
+
             rows.push({
-                kind: "param",
                 id: param.id,
                 label: param.id,
-                type: param.type,
-                uiType: param.ui.type
+
+                param,
+                input: matchingInput
             });
         }
 
-        for (const output of this.block.outputs) {
+        for (const input of this.block.inputs) {
+
+            const alreadyMerged = rows.some(
+                row => row.input?.id === input.id
+            );
+
+            if (alreadyMerged) {
+                continue;
+            }
+
             rows.push({
-                kind: "output",
-                id: output.id,
-                label: output.id,
-                type: output.type
+                id: input.id,
+                label: input.id,
+
+                input
             });
         }
-
+        
         return rows;
     }
 

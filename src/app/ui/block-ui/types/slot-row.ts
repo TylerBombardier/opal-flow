@@ -1,23 +1,10 @@
-export type SlotRow = | InputRow | ParamRow | OutputRow;
+import { InputSlot, OutputSlot, ParamSlot } from "../../../blocks/types";
 
-export type InputRow = {
-    kind: "input";
+export type ValueRow = {
     id: string;
     label: string;
-    type: string;
-}
-
-export type ParamRow = {
-    kind: "param";
-    id: string;
-    label: string;
-    type: string;
-    uiType: string;
-}
-
-export type OutputRow = {
-    kind: "output";
-    id: string;
-    label: string;
-    type: string;
+    
+    input?: InputSlot
+    param?: ParamSlot
+    output?: OutputSlot
 }
