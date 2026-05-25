@@ -15,29 +15,28 @@
     <div
         class="block-body panzoom-exclude"
     >
-        @for (row of rows; track row.id) {
-            <div class="row">
-                <div class="slot-container left">
-                    @if (row.input) {
-                        <div class="slot input-slot"></div>
-                    }
-                </div>
-
-                <div class="row-content">
-                    @if (row.param) {
-                        <div class="param-ui">
-                            {{ row.param.ui.type }}
-                        </div>
-                    }
-                </div>
+        <div class="wrapper">
+            <div>
+                @for (row of rows; track row.id) {
+                    <div class="row">
+                        @if(row.input){
+                            <div class="input-slot"></div>
+                        }
+                        @if(row.param){
+                            <div class="param">
+                                {{ row.param.ui.type }}
+                            </div>
+                        }
+                    </div>
+                }
             </div>
-        }
-        <div class="outputs">
-            @for (output of block.outputs; track output.id) {
-                <div class="output-wrapper">
-                    <div class="slot output-slot"></div>
-                </div>
-            }
+            
+            <div class="output-bar">
+                @for(output of block.outputs; track output.id){
+                    <div class="output-slot"></div>
+                }
+            </div>
         </div>
+        
     </div>
 </div>
