@@ -31,9 +31,11 @@
                             </div>
 
                             @if (row.param) {
-                                <div class="param">
-                                    {{ row.param.ui.type }}
-                                </div>
+                                <app-param-renderer
+                                    [instance]="instance"
+                                    [param]="row.param"
+                                >
+                                </app-param-renderer>
                             }
 
                         </div>

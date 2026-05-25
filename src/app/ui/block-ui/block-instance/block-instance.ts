@@ -4,10 +4,11 @@ import { Instance } from '../../../graph/types';
 import { EditorStateService } from '../../../services/editor-state-service';
 import { EditorControllerService } from '../../../services/editor-controller-service';
 import { ValueRow } from '../types/slot-row';
+import { ParamRenderer } from '../param-renderer/param-renderer';
 
 @Component({
   selector: 'app-block-instance',
-  imports: [],
+  imports: [ParamRenderer],
   templateUrl: './block-instance.html',
   styleUrl: './block-instance.scss',
 })
