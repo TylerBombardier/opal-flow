@@ -3,20 +3,20 @@ import { SliderComponent } from "../components/slider-component/slider-component
 import { TextboxComponent } from "../components/textbox-component/textbox-component";
 import { ComponentRegistry } from "./component-registry";
 
-export const registry = new ComponentRegistry();
+export const compRegistry = new ComponentRegistry();
 
 export function registerComponents(){
-    registry.register(
+    compRegistry.register(
         "checkbox",
         CheckboxComponent
     )
 
-    registry.register(
+    compRegistry.register(
         "textbox",
         TextboxComponent
     )
 
-    registry.register(
+    compRegistry.register(
         "slider",
         SliderComponent
     )
