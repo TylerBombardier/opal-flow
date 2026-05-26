@@ -72,7 +72,7 @@ export class Graph {
 
             inputs[slot.id] = value;
         }
-
+        
         const outputs = block.fn(
             inputs,
             instance.params ?? {}

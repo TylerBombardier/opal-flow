@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Canvas } from "../../ui/app-ui/canvas/canvas";
 import { BlockPalette } from "../../ui/app-ui/block-palette/block-palette";
 import { EditorControllerService } from '../../services/editor-controller-service';
 import { GraphService } from '../../services/graph-service';
+import { Canvas } from '../../ui/app-ui/canvas/canvas';
 
 @Component({
   selector: 'app-lab',
