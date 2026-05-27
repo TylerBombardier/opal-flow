@@ -162,6 +162,8 @@ export class GraphService {
             w => w.from !== id && w.to !== id
         );
 
+        console.log("Instance Deleted")
+
         this.graph.invalidateFrom(id)
     }
 

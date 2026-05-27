@@ -37,6 +37,10 @@ export class EditorControllerService {
         });
     }
 
+    deleteInstance(instanceId: string){
+        this.graphService.removeInstance(instanceId)
+    }
+
     onHandleGrab(instance: Instance, event: PointerEvent){
         console.log("Instance Handle Grabbed",instance.blockId)
 

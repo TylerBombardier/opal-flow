@@ -67,6 +67,15 @@ export class BlockInstance {
     }
 
     onFocus(event: PointerEvent){
+        event.stopPropagation()
         this.editorController.bringInstanceToFront(this.instance.id)
+    }
+
+    onDeleteBtnPressed(event: PointerEvent){
+        event.stopPropagation()
+        if(event.button != 0){
+            return
+        }
+        this.editorController.deleteInstance(this.instance.id)
     }
 }

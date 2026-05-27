@@ -12,11 +12,28 @@
 
 .block-header {
     cursor: grab;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     border-bottom: 1px solid #555;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
     background-color: #262626;
+}
+
+// Delete Button Styling
+.delete-btn {
+    margin-left: auto;
+    background: transparent;
+    color: rgba(255,255,255,0.5);
+
+    cursor: pointer;
+    font-size: 12px;
+    padding: 2px 4px;
+}
+
+.delete-btn:hover {
+    color: rgba(255, 85, 85, 0.401);
 }
 
 // Body Styling
