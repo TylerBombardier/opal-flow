@@ -27,8 +27,8 @@ export class Canvas implements AfterViewInit{
 
         // Panzoom options
         const options: PanzoomOptions = {
-            maxScale: 3,
-            minScale: 0.5,
+            maxScale: 1,
+            minScale: 1,
             startX: -1000 + this.editorState.viewportWidth / 2,
             startY: -1000 + this.editorState.viewportHeight / 2,
             excludeClass: "panzoom-exclude"
