@@ -163,6 +163,7 @@ export class EditorControllerService {
      */
     onPointerUp(event: PointerEvent){
         this.dropInstance()
+        this.stopDragWire()
     }
 
     startDragWire(
@@ -192,5 +193,12 @@ export class EditorControllerService {
 
     dragWire(){
         console.log("Dragging Wire")
+    }
+
+    stopDragWire(){
+        if(this.editorState.activeWireDrag != null ){
+            this.editorState.activeWireDrag = null;
+            console.log("Stopped Dragging Wire")
+        }
     }
 }
