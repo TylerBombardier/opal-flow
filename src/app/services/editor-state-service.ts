@@ -24,6 +24,17 @@ export class EditorStateService {
 
     draggingInstanceId: string | null = null;
 
+    activeWireDrag: {
+        fromInstanceId: string;
+        fromOutputId: string;
+
+        startX: number;
+        startY: number;
+
+        mouseX: number;
+        mouseY: number;
+    } | null = null;
+
     dragOffset = {
         x: 0,
         y: 0,

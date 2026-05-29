@@ -78,4 +78,8 @@ export class BlockInstance {
         }
         this.editorController.deleteInstance(this.instance.id)
     }
+
+    onOutputPressed(event: PointerEvent, outputID: string){
+        console.log("Output pressed: ",outputID)
+    }
 }

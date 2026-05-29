@@ -55,7 +55,11 @@
             
             <div class="output-bar">
                 @for(output of block.outputs; track output.id){
-                    <div class="output-slot"></div>
+                    <div 
+                        class="output-slot"
+                        (pointerdown)="onOutputPressed($event, output.id)"
+                    >
+                    </div>
                 }
             </div>
         </div>
