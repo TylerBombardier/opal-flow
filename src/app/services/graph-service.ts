@@ -25,6 +25,10 @@ export class GraphService {
         return this.graph.run(instanceId);
     }
 
+    getAllInstances(){
+        return this.graph.instances.values
+    }
+
     getGraph(){
         return this.graph;
     }

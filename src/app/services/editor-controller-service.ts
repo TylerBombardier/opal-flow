@@ -154,6 +154,10 @@ export class EditorControllerService {
     }
 
     /**
+     * PARAMETERS
+     */
+
+    /**
      * Sets the parameter to a value for a given param and instance id.
      * @param instanceId 
      * @param paramId 

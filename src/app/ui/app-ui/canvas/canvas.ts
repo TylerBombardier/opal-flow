@@ -97,6 +97,6 @@ export class Canvas implements AfterViewInit{
 
     // Returns all instances currently in the graph
     get instances(){
-        return Array.from(this.graphService.getGraph().instances.values());
+        return this.graphService.getAllInstances()
     }
 }
