@@ -9,6 +9,11 @@ import { Instance } from '../graph/types';
 export class EditorControllerService {
     constructor(public graphService: GraphService, public editorState: EditorStateService){}
 
+    /**
+     * Increments the Z-index of an instance
+     * @param instanceId 
+     * @returns 
+     */
     bringInstanceToFront(instanceId: string){
         console.log("Instance Focused: ", this.graphService.getGraph().instances.get(instanceId)?.blockId)
 
@@ -27,6 +32,10 @@ export class EditorControllerService {
         this.editorState.lastBroughtForward = instanceId
     }
 
+    /**
+     * Spawns an instance located at the center of your screen
+     * @param blockId 
+     */
     spawnBlockAtCenter(blockId: string) {
         console.log("Spawned block at center: ",blockId)
         const center = this.editorState.snapPosition(this.editorState.viewportCenterWorld.x,this.editorState.viewportCenterWorld.y);
@@ -37,9 +46,19 @@ export class EditorControllerService {
         });
     }
 
+    /**
+     * Deletes an instance from the Graph
+     * @param instanceId 
+     */
     deleteInstance(instanceId: string){
         this.graphService.removeInstance(instanceId)
     }
+
+    /**
+     * Start Instance Dragging
+     * @param instance 
+     * @param event 
+     */
 
     onHandleGrab(instance: Instance, event: PointerEvent){
         console.log("Instance Handle Grabbed",instance.blockId)
@@ -59,6 +78,11 @@ export class EditorControllerService {
         }
     }
 
+    /**
+     * Handles Instance Dragging
+     * @param event 
+     * @returns 
+     */
     dragInstance(event: PointerEvent){
         const id = this.editorState.draggingInstanceId
 
@@ -88,6 +112,9 @@ export class EditorControllerService {
         instance.position.y = snapped.y
     }
 
+    /**
+     * Stops Dragging the Instance
+     */
     dropInstance(){
         if(this.editorState.draggingInstanceId != null){
             console.log("Stopped dragging instance")
@@ -95,6 +122,13 @@ export class EditorControllerService {
         }
     }
 
+    /**
+     * Sets the parameter to a value for a given param and instance id.
+     * @param instanceId 
+     * @param paramId 
+     * @param value 
+     * @returns 
+     */
     setParam(
         instanceId: string,
         paramId: string,
@@ -109,6 +143,10 @@ export class EditorControllerService {
         instance.params[paramId] = value
     }
 
+    /**
+     * Global method, called every time the pointer moves.
+     * @param event 
+     */
     onPointerMove(event: PointerEvent){
         if(this.editorState.draggingInstanceId){
             this.dragInstance(event)
@@ -119,6 +157,10 @@ export class EditorControllerService {
         }
     }
 
+    /**
+     * Global method, called every time the pointer stops clicking
+     * @param event 
+     */
     onPointerUp(event: PointerEvent){
         this.dropInstance()
     }
@@ -149,6 +191,6 @@ export class EditorControllerService {
     }
 
     dragWire(){
-
+        console.log("Dragging Wire")
     }
 }
