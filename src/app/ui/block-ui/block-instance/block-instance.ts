@@ -81,5 +81,11 @@ export class BlockInstance {
 
     onOutputPressed(event: PointerEvent, outputID: string){
         console.log("Output pressed: ",outputID)
+        
+        this.editorController.startDragWire(
+            event,
+            this.instance.id,
+            outputID
+        )
     }
 }

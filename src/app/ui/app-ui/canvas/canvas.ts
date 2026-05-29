@@ -86,13 +86,13 @@ export class Canvas implements AfterViewInit{
     // Handles dragging the current instance.
     @HostListener('document:pointermove',['$event'])
     onPointerMove(event: PointerEvent){
-        this.editorController.onHandleDrag(event)
+        this.editorController.onPointerMove(event)
     }
 
     // Handles stopping the instance from being dragged.
-    @HostListener('document:pointerup')
-    onPointerUp(){
-        this.editorController.onHandleDrop()
+    @HostListener('document:pointerup',['$event'])
+    onPointerUp(event: PointerEvent){
+        this.editorController.onPointerUp(event)
     }
 
     // Returns all instances currently in the graph

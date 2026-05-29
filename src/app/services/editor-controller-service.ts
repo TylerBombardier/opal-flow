@@ -59,7 +59,7 @@ export class EditorControllerService {
         }
     }
 
-    onHandleDrag(event: PointerEvent){
+    dragInstance(event: PointerEvent){
         const id = this.editorState.draggingInstanceId
 
         if(!id){
@@ -88,7 +88,7 @@ export class EditorControllerService {
         instance.position.y = snapped.y
     }
 
-    onHandleDrop(){
+    dropInstance(){
         if(this.editorState.draggingInstanceId != null){
             console.log("Stopped dragging instance")
             this.editorState.draggingInstanceId = null;
@@ -107,5 +107,48 @@ export class EditorControllerService {
         }
 
         instance.params[paramId] = value
+    }
+
+    onPointerMove(event: PointerEvent){
+        if(this.editorState.draggingInstanceId){
+            this.dragInstance(event)
+        }
+
+        if(this.editorState.activeWireDrag){
+            this.dragWire()
+        }
+    }
+
+    onPointerUp(event: PointerEvent){
+        this.dropInstance()
+    }
+
+    startDragWire(
+        event: PointerEvent, 
+        instanceId: string, 
+        outputId: string
+    ){
+        const el = event.currentTarget as HTMLElement
+        const rect = el.getBoundingClientRect();
+
+        const x = rect.left + rect.width / 2
+        const y = rect.top + rect.height / 2
+
+        this.editorState.activeWireDrag = {
+            fromInstanceId: instanceId,
+            fromOutputId: outputId,
+
+            startX: x,
+            startY: y,
+
+            mouseX: x,
+            mouseY: y
+        }
+
+        console.log("Started wire drag: ",this.editorState.activeWireDrag)
+    }
+
+    dragWire(){
+
     }
 }
