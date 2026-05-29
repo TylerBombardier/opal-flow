@@ -10,27 +10,35 @@ export class EditorControllerService {
     constructor(public graphService: GraphService, public editorState: EditorStateService){}
 
     /**
-     * Increments the Z-index of an instance
-     * @param instanceId 
-     * @returns 
+     * GLOBAL METHODS
      */
-    bringInstanceToFront(instanceId: string){
-        console.log("Instance Focused: ", this.graphService.getGraph().instances.get(instanceId)?.blockId)
 
-        // Doesn't bring foward if already brought forward last time. So you can't rapdily increase one instance's z-index.
-        if(this.editorState.lastBroughtForward == instanceId){
-            return
+    /**
+     * Global method, called every time the pointer moves.
+     * @param event 
+     */
+    onPointerMove(event: PointerEvent){
+        if(this.editorState.draggingInstanceId){
+            this.dragInstance(event)
         }
 
-        // Sets the z-index of that instance and records it in the state
-        this.editorState.instanceZIndexs.set(
-            instanceId,
-            this.editorState.nextZIndex++
-        );
-
-        // Logs the latest brought forward instance
-        this.editorState.lastBroughtForward = instanceId
+        if(this.editorState.activeWireDrag){
+            this.dragWire()
+        }
     }
+
+    /**
+     * Global method, called every time the pointer stops clicking
+     * @param event 
+     */
+    onPointerUp(event: PointerEvent){
+        this.dropInstance()
+        this.stopDragWire()
+    }
+
+    /**
+     * BLOCKS
+     */
 
     /**
      * Spawns an instance located at the center of your screen
@@ -52,6 +60,29 @@ export class EditorControllerService {
      */
     deleteInstance(instanceId: string){
         this.graphService.removeInstance(instanceId)
+    }
+
+    /**
+     * Increments the Z-index of an instance
+     * @param instanceId 
+     * @returns 
+     */
+    bringInstanceToFront(instanceId: string){
+        console.log("Instance Focused: ", this.graphService.getGraph().instances.get(instanceId)?.blockId)
+
+        // Doesn't bring foward if already brought forward last time. So you can't rapdily increase one instance's z-index.
+        if(this.editorState.lastBroughtForward == instanceId){
+            return
+        }
+
+        // Sets the z-index of that instance and records it in the state
+        this.editorState.instanceZIndexs.set(
+            instanceId,
+            this.editorState.nextZIndex++
+        );
+
+        // Logs the latest brought forward instance
+        this.editorState.lastBroughtForward = instanceId
     }
 
     /**
@@ -144,28 +175,15 @@ export class EditorControllerService {
     }
 
     /**
-     * Global method, called every time the pointer moves.
-     * @param event 
+     * WIRES
      */
-    onPointerMove(event: PointerEvent){
-        if(this.editorState.draggingInstanceId){
-            this.dragInstance(event)
-        }
-
-        if(this.editorState.activeWireDrag){
-            this.dragWire()
-        }
-    }
 
     /**
-     * Global method, called every time the pointer stops clicking
+     * Starts the process of dragging a wire
      * @param event 
+     * @param instanceId 
+     * @param outputId 
      */
-    onPointerUp(event: PointerEvent){
-        this.dropInstance()
-        this.stopDragWire()
-    }
-
     startDragWire(
         event: PointerEvent, 
         instanceId: string, 
