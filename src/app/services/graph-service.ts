@@ -26,7 +26,7 @@ export class GraphService {
     }
 
     getAllInstances(){
-        return this.graph.instances.values
+        return Array.from(this.graph.instances.values());
     }
 
     getGraph(){

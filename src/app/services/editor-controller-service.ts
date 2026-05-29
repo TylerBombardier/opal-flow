@@ -23,7 +23,7 @@ export class EditorControllerService {
         }
 
         if(this.editorState.activeWireDrag){
-            this.dragWire()
+            this.dragWire(event)
         }
     }
 
@@ -213,7 +213,7 @@ export class EditorControllerService {
         console.log("Started wire drag: ",this.editorState.activeWireDrag)
     }
 
-    dragWire(){
+    dragWire(event: PointerEvent){
         console.log("Dragging Wire")
     }
 
