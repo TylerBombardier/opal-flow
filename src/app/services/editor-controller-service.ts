@@ -214,7 +214,16 @@ export class EditorControllerService {
     }
 
     dragWire(event: PointerEvent){
-        console.log("Dragging Wire")
+        const drag = this.editorState.activeWireDrag
+
+        if(!drag){
+            return
+        }
+
+        drag.mouseX = event.clientX
+        drag.mouseY = event.clientY
+
+        console.log("Dragging Wire",drag)
     }
 
     stopDragWire(){
