@@ -1,4 +1,4 @@
-type WireRenderData = {
+export type WireDrawContext = {
     start: {
         x: number,
         y: number
@@ -8,4 +8,8 @@ type WireRenderData = {
         x: number,
         y: number
     }
+}
+
+export interface WireStrategy {
+    draw(context: WireDrawContext): string;
 }
