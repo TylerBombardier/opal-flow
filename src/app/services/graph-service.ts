@@ -95,6 +95,9 @@ export class GraphService {
         to: string,
         toInput: string
     ) {
+        // Generate a an ID for that wire.
+        const id = crypto.randomUUID();
+
         const sourceInstance = this.graph.instances.get(from);
         const targetInstance = this.graph.instances.get(to);
 
@@ -149,6 +152,7 @@ export class GraphService {
         );
 
         this.graph.wires.push({
+            id,
             from,
             fromOutput,
             to,
