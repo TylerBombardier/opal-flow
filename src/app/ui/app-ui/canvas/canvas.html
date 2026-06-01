@@ -9,12 +9,16 @@
             class="grid"
         ></div>
 
+        <svg class="wire-layer">
+            @for (wire of wires; track wire.id) {
+                <path></path>
+            }
+        </svg>
+
         @for (instance of instances; track instance.id) {
             <app-block-instance [instance]="instance">
 
             </app-block-instance>
         }
     </div>
-
-    
 </div>

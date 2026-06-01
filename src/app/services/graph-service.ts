@@ -29,6 +29,10 @@ export class GraphService {
         return Array.from(this.graph.instances.values());
     }
 
+    getAllWires(){
+        return Array.from(this.graph.wires.values());
+    }
+
     getGraph(){
         return this.graph;
     }
