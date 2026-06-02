@@ -31,8 +31,8 @@ export class EditorStateService {
         startX: number;
         startY: number;
 
-        mouseX: number;
-        mouseY: number;
+        endX: number;
+        endY: number;
     } | null = null;
 
     dragOffset = {

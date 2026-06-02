@@ -4,6 +4,7 @@ import { BlockInstance } from "../../block-ui/block-instance/block-instance";
 import Panzoom, { PanzoomOptions } from "@panzoom/panzoom";
 import { EditorStateService } from '../../../services/editor-state-service';
 import { EditorControllerService } from '../../../services/editor-controller-service';
+import { WireRenderer } from '../../wire-ui/wire-renderer/wire-renderer';
 
 @Component({
   selector: 'app-canvas',
@@ -12,7 +13,12 @@ import { EditorControllerService } from '../../../services/editor-controller-ser
   styleUrl: './canvas.scss',
 })
 export class Canvas implements AfterViewInit{
-    constructor(public graphService: GraphService, public editorState: EditorStateService, public editorController: EditorControllerService){}
+    constructor(
+        public wireRenderer: WireRenderer, 
+        public graphService: GraphService, 
+        public editorState: EditorStateService, 
+        public editorController: EditorControllerService
+    ){}
 
     @ViewChild('world')
     world!: ElementRef<HTMLDivElement>;

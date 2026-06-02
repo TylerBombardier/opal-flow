@@ -196,8 +196,7 @@ export class EditorControllerService {
         const el = event.currentTarget as HTMLElement
         const rect = el.getBoundingClientRect();
 
-        const x = rect.left + rect.width / 2
-        const y = rect.top + rect.height / 2
+        const { x, y } = this.editorState.screenToWorld(rect.left + rect.width / 2, rect.top + rect.height / 2)
 
         this.editorState.activeWireDrag = {
             fromInstanceId: instanceId,
@@ -206,8 +205,8 @@ export class EditorControllerService {
             startX: x,
             startY: y,
 
-            mouseX: x,
-            mouseY: y
+            endX: x,
+            endY: y
         }
 
         console.log("Started wire drag: ",this.editorState.activeWireDrag)
@@ -220,8 +219,10 @@ export class EditorControllerService {
             return
         }
 
-        drag.mouseX = event.clientX
-        drag.mouseY = event.clientY
+        const { x, y } = this.editorState.screenToWorld(event.clientX, event.clientY)
+
+        drag.endX = x
+        drag.endY = y
 
         console.log("Dragging Wire",drag)
     }
