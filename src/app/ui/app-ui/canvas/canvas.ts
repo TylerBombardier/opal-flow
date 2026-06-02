@@ -106,6 +106,7 @@ export class Canvas implements AfterViewInit{
         return this.graphService.getAllInstances();
     }
 
+    // Returns all wires currently in the graph
     get wires(){
         return this.graphService.getAllWires();
     }
