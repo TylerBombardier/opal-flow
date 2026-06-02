@@ -52,23 +52,23 @@ export class Canvas implements AfterViewInit{
             };
         });
 
-        /** Removed Feature. Zoom was giving me way too many complications. 
-        Buffers zoom requests to stop a bug that makes the camera jump around
-        elem.addEventListener('wheel', (event) => {
-            event.preventDefault();
+        //Removed Feature. Zoom was giving me way too many complications.
+        //Buffers zoom requests to stop a bug that makes the camera jump around
+        // elem.addEventListener('wheel', (event) => {
+        //     event.preventDefault();
 
-            if (this.zooming || this.isPanning) {
-                return;
-            }
+        //     if (this.zooming || this.isPanning) {
+        //         return;
+        //     }
 
-            this.zooming = true;
+        //     this.zooming = true;
 
-            requestAnimationFrame(() => {
-                panzoom.zoomWithWheel(event);
-                this.zooming = false;
-            });
-        });
-        */
+        //     requestAnimationFrame(() => {
+        //         panzoom.zoomWithWheel(event);
+        //         this.zooming = false;
+        //     });
+        // });
+        
         
         
         // Detects If the user is panning
