@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { EditorStateService } from "../../../services/editor-state-service";
 import { LinearWireStrategy } from "../strategies/linear/linear-wire-strategy";
 import { WireDrawContext, WireStrategy } from "../types/wire-rendering";
+import { Wire } from "../../../graph/types";
 
 @Injectable({ 
     providedIn: 'root' 
@@ -23,7 +24,11 @@ export class WireRenderer {
         })
     }
 
-    getPreviewPath(): string {
+    renderWire(wire: Wire): string {
+        return ""
+    }
+
+    renderPreviewPath(): string {
         const drag = this.editorState.activeWireDrag
         if(!drag) return "";
         
