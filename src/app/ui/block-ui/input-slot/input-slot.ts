@@ -18,12 +18,12 @@ export class InputSlot implements AfterViewInit, OnDestroy{
     instanceId!: string
 
     @Input()
-    input!: string
+    inputId!: string
 
     ngAfterViewInit(): void {
         this.elementRegistry.registerInput(
             this.instanceId,
-            this.input,
+            this.inputId,
             this.elementRef.nativeElement
         )
     }
@@ -31,7 +31,7 @@ export class InputSlot implements AfterViewInit, OnDestroy{
     ngOnDestroy(): void {
         this.elementRegistry.unregisterInput(
             this.instanceId,
-            this.input
+            this.inputId
         )
     }
 }

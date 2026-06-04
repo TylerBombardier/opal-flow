@@ -30,7 +30,11 @@
                     <div class="row">
 
                         @if (row.input) {
-                            <div class="input-slot"></div>
+                            <app-input-slot
+                                [instanceId]="instance.id"
+                                [inputId]="row.input.id"
+                            >
+                            </app-input-slot>
                         }
 
                         <div class="container">
@@ -55,11 +59,11 @@
             
             <div class="output-bar">
                 @for(output of block.outputs; track output.id){
-                    <div 
-                        class="output-slot"
-                        (pointerdown)="onOutputPressed($event, output.id)"
+                    <app-output-slot
+                        [instanceId]="instance.id"
+                        [outputId]="output.id"
                     >
-                    </div>
+                    </app-output-slot>
                 }
             </div>
         </div>

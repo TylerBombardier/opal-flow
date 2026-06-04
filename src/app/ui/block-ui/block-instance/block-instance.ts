@@ -5,10 +5,12 @@ import { EditorStateService } from '../../../services/editor-state-service';
 import { EditorControllerService } from '../../../services/editor-controller-service';
 import { ValueRow } from '../types/slot-row';
 import { ParamRenderer } from '../param-renderer/param-renderer';
+import { OutputSlot } from "../output-slot/output-slot";
+import { InputSlot } from '../input-slot/input-slot';
 
 @Component({
   selector: 'app-block-instance',
-  imports: [ParamRenderer],
+  imports: [ParamRenderer, InputSlot, OutputSlot],
   templateUrl: './block-instance.html',
   styleUrl: './block-instance.scss',
 })
@@ -77,15 +79,5 @@ export class BlockInstance {
             return
         }
         this.editorController.deleteInstance(this.instance.id)
-    }
-
-    onOutputPressed(event: PointerEvent, outputID: string){
-        console.log("Output pressed: ",outputID)
-        
-        this.editorController.startDragWire(
-            event,
-            this.instance.id,
-            outputID
-        )
     }
 }
