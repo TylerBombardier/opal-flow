@@ -18,12 +18,12 @@ export class OutputSlot {
     instanceId!: string
 
     @Input()
-    input!: string
+    output!: string
 
     ngAfterViewInit(): void {
         this.elementRegistry.registerOutput(
             this.instanceId,
-            this.input,
+            this.output,
             this.elementRef.nativeElement
         )
     }
@@ -31,7 +31,7 @@ export class OutputSlot {
     ngOnDestroy(): void {
         this.elementRegistry.unregisterOutput(
             this.instanceId,
-            this.input
+            this.output
         )
     }
 }
