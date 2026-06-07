@@ -42,10 +42,24 @@ export class EditorStateService {
 
     hoveredInstanceId: string | null = null;
 
-    hoveredInputId: string | null = null;
+    hoveredInputId: {
+        instanceId: string,
+        inputId: string
+    } | null = null;
 
     viewportWidth = window.innerWidth;
     viewportHeight = window.innerHeight;
+
+    setHoveredInput(instanceId: string, inputId: string){
+        this.hoveredInputId = {
+            instanceId,
+            inputId
+        };
+    }
+
+    clearHoveredInput(){
+        this.hoveredInputId = null;
+    }
 
     snapPosition(
         x: number,

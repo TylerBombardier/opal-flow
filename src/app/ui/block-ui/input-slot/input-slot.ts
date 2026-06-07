@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy } from '@angular/core';
 import { ElementRegistryService } from '../../../services/element-registry-service';
+import { EditorStateService } from '../../../services/editor-state-service';
 
 @Component({
   selector: 'app-input-slot',
@@ -11,7 +12,8 @@ export class InputSlot implements AfterViewInit, OnDestroy{
 
     constructor(
         private elementRef: ElementRef<HTMLElement>,
-        private elementRegistry: ElementRegistryService
+        private elementRegistry: ElementRegistryService,
+        private editorState: EditorStateService
     ){}
 
     @Input()
@@ -33,5 +35,13 @@ export class InputSlot implements AfterViewInit, OnDestroy{
             this.instanceId,
             this.inputId
         )
+    }
+
+    onPointerEnter(event: PointerEvent){
+        this.editorState.setHoveredInput(this.instanceId, this.inputId)
+    }
+
+    onPointerLeave(event: PointerEvent){
+        this.editorState.clearHoveredInput()
     }
 }
