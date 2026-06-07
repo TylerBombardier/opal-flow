@@ -11,7 +11,7 @@
 
         <svg class="wire-layer">
             @for (wire of wires; track wire.id) {
-                <path [attr.d]="wireRenderer.renderWire(wire)"></path>
+                <path [attr.d]="wireRenderer.renderWire(wire)" stroke="white" stroke-width="2"></path>
             }
             @if(this.editorState.activeWireDrag){
                 <path [attr.d]="wireRenderer.renderPreviewWire()" stroke="white" stroke-width="2"></path>

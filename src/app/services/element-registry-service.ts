@@ -77,7 +77,7 @@ export class ElementRegistryService {
         instanceId: string,
         slotId: string
     ){
-        return this.inputElements.get(
+        return this.outputElements.get(
             this.slotKey(instanceId,slotId)
         );
     }

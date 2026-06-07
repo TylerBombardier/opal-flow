@@ -228,9 +228,21 @@ export class EditorControllerService {
     }
 
     stopDragWire(){
-        if(this.editorState.activeWireDrag != null ){
-            this.editorState.activeWireDrag = null;
-            console.log("Stopped Dragging Wire")
+        const drag = this.editorState.activeWireDrag;
+
+        const target = this.editorState.hoveredInputId;
+
+        if(drag && target){
+            this.graphService.addWire(
+                drag.fromInstanceId,
+                drag.fromOutputId,
+                target.instanceId,
+                target.inputId
+            )
         }
+
+        this.editorState.activeWireDrag = null;
+        this.editorState.clearHoveredInput();
+        console.log("Stopped Dragging Wire")
     }
 }
