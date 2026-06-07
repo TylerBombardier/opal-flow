@@ -55,10 +55,12 @@ export class EditorStateService {
             instanceId,
             inputId
         };
+        console.log(`Hovering input: ${instanceId}:${inputId}`)
     }
 
     clearHoveredInput(){
         this.hoveredInputId = null;
+        console.log(`Stopped hovering input`)
     }
 
     snapPosition(
