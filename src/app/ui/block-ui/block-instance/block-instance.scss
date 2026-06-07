@@ -53,8 +53,7 @@
 
 // Input Slots Styling
 
-
-.row {
+.row-input {
     display: flex;
     align-items: center;
 }
@@ -63,8 +62,13 @@
 
 .output-bar{
     height: 100%;
-    width: 10px;
     margin-left: auto;
+}
+
+.row-output {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 // Block Container Styling
@@ -77,4 +81,5 @@
 .label{
     font-size: 0.7em;
     color: rgba(255,255,255,0.5);
+    width: 100%;
 }

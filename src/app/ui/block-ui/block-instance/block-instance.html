@@ -25,9 +25,9 @@
     >
         <div class="wrapper">
             <div>
-                @for (row of rows; track row.id) {
+                @for (row of rowInputs; track row.id) {
 
-                    <div class="row">
+                    <div class="row-input">
 
                         @if (row.input) {
                             <app-input-slot
@@ -59,11 +59,17 @@
             
             <div class="output-bar">
                 @for(output of block.outputs; track output.id){
-                    <app-output-slot
-                        [instanceId]="instance.id"
-                        [outputId]="output.id"
-                    >
-                    </app-output-slot>
+                    <div class="row-output">
+                        <div class="label">
+                            {{ output.displayName ?? output.id }}
+                        </div>
+                        <app-output-slot
+                            [instanceId]="instance.id"
+                            [outputId]="output.id"
+                        >
+                        </app-output-slot>
+                    </div>
+                    
                 }
             </div>
         </div>

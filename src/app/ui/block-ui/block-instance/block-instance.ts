@@ -24,7 +24,7 @@ export class BlockInstance {
         return this.graphService.getGraph().registry.get(this.instance.blockId)
     }
 
-    get rows(){
+    get rowInputs(){
         const rows: ValueRow[] = []
 
         for (const param of this.block.params ?? []) {
