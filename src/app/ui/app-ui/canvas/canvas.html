@@ -14,7 +14,7 @@
                 <path [attr.d]="wireRenderer.renderWire(wire)"></path>
             }
             @if(this.editorState.activeWireDrag){
-                <path [attr.d]="wireRenderer.renderPreviewPath()" stroke="white" stroke-width="2"></path>
+                <path [attr.d]="wireRenderer.renderPreviewWire()" stroke="white" stroke-width="2"></path>
             }
         </svg>
 

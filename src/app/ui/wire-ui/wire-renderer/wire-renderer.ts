@@ -3,6 +3,7 @@ import { EditorStateService } from "../../../services/editor-state-service";
 import { LinearWireStrategy } from "../strategies/linear/linear-wire-strategy";
 import { WireDrawContext, WireStrategy } from "../types/wire-rendering";
 import { Wire } from "../../../graph/types";
+import { ElementRegistryService } from "../../../services/element-registry-service";
 
 @Injectable({ 
     providedIn: 'root' 
@@ -13,6 +14,7 @@ export class WireRenderer {
 
     constructor(
         private editorState: EditorStateService,
+        private elementRegistry: ElementRegistryService
     ){}
 
     render(
@@ -24,11 +26,38 @@ export class WireRenderer {
         })
     }
 
+    // Renders established connections between to instances
     renderWire(wire: Wire): string {
-        return ""
+        const output = this.elementRegistry.getOutput(wire.from, wire.fromOutput);
+        const input = this.elementRegistry.getInput(wire.to, wire.toInput);
+
+        if(!output || !input){
+            return ""
+        }
+
+        const outputPos = output.getBoundingClientRect();
+        const inputPos = input.getBoundingClientRect();
+
+        const start = this.editorState.screenToWorld(
+            outputPos.left + outputPos.width / 2,
+            outputPos.top + outputPos.height / 2
+        )
+
+        const end = this.editorState.screenToWorld(
+            inputPos.left + inputPos.width / 2,
+            inputPos.top + inputPos.height / 2
+        )
+
+        return this.render({
+            start,
+            end
+        })
     }
 
-    renderPreviewPath(): string {
+
+    // Renders a preview of the wire you're dragging
+    renderPreviewWire(): string {
+        // Active Wire Drag automaticaly centers the starting position
         const drag = this.editorState.activeWireDrag
         if(!drag) return "";
         

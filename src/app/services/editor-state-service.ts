@@ -42,6 +42,8 @@ export class EditorStateService {
 
     hoveredInstanceId: string | null = null;
 
+    hoveredInputId: string | null = null;
+
     viewportWidth = window.innerWidth;
     viewportHeight = window.innerHeight;
 
