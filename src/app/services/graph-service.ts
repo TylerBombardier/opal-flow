@@ -33,6 +33,10 @@ export class GraphService {
         return Array.from(this.graph.wires.values());
     }
 
+    getInstance(id: string){
+        return this.getGraph().instances.get(id);
+    }
+
     getGraph(){
         return this.graph;
     }

@@ -121,7 +121,7 @@ export class EditorControllerService {
             return
         }
 
-        const instance = this.graphService.getGraph().instances.get(id);
+        const instance = this.graphService.getInstance(id)
 
         if(!instance){
             return
