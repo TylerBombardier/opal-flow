@@ -209,7 +209,7 @@ export class EditorControllerService {
             endY: y
         }
 
-        console.log("Started wire drag: ",this.editorState.activeWireDrag)
+        console.log("Initialized wire drag: ",this.editorState.activeWireDrag)
     }
 
     dragWire(event: PointerEvent){
@@ -243,6 +243,6 @@ export class EditorControllerService {
 
         this.editorState.activeWireDrag = null;
         this.editorState.clearHoveredInput();
-        console.log("Stopped Dragging Wire")
+        console.log("Cleared Dragging Wire Value")
     }
 }
