@@ -121,8 +121,6 @@ export class EditorControllerService {
             return
         }
 
-        console.log("Dragging Instance: ", this.graphService.getGraph().instances.get(id)?.blockId)
-
         const instance = this.graphService.getGraph().instances.get(id);
 
         if(!instance){
@@ -139,8 +137,14 @@ export class EditorControllerService {
 
         const snapped = this.editorState.snapPosition(newXPos,newYPos)
 
-        instance.position.x = snapped.x
-        instance.position.y = snapped.y
+        if(instance.position.x == snapped.x && instance.position.y == snapped.y){
+            return
+        }
+        else {
+            console.log("Instance Moved")
+            instance.position.x = snapped.x
+            instance.position.y = snapped.y
+        }
     }
 
     /**
