@@ -249,4 +249,16 @@ export class EditorControllerService {
         this.editorState.clearHoveredInput();
         console.log("Cleared Dragging Wire Value")
     }
+
+    runInstance(instanceId: string){
+        const graph = this.graphService.getGraph();
+
+        graph.clearRuntime();
+
+        try{
+            graph.run(instanceId)
+        }catch(error){
+            console.error(error)
+        }
+    }
 }
