@@ -37,6 +37,14 @@ export class GraphService {
         return this.getGraph().instances.get(id);
     }
 
+    getCachedValues(instanceId: string){
+        return this.getCache().get(instanceId);
+    }
+
+    getCache(){
+        return this.graph.cache;
+    }
+
     getGraph(){
         return this.graph;
     }

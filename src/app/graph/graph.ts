@@ -8,7 +8,7 @@ export class Graph {
     registry: BlockRegistry
 
     private visiting = new Set<InstanceID>();
-    private cache: Map<InstanceID, Record<string, any>>;
+    cache: Map<InstanceID, Record<string, any>>;
 
     constructor(registry: BlockRegistry) {
         this.instances = new Map<InstanceID, Instance>();

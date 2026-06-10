@@ -20,6 +20,23 @@ export class Lab implements OnInit{
 
     ngOnInit() {
         // this.runTests();
+        // this.stressTest();
+    }
+    
+    // Stress Testing Function
+
+    stressTest(){
+        const mainInstance = this.graphService.addInstance("text",{
+            position: {
+                x: 0,
+                y: 0
+            }
+        });
+
+        for(let i = 0; i < 300; i++){
+            const otherinstance = this.graphService.addInstance("concat")
+            this.graphService.addWire(mainInstance, "out", otherinstance, "text")
+        }
     }
 
     /**

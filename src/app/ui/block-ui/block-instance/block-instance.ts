@@ -7,6 +7,7 @@ import { ValueRow } from '../types/slot-row';
 import { ParamRenderer } from '../param-renderer/param-renderer';
 import { OutputSlot } from "../output-slot/output-slot";
 import { InputSlot } from '../input-slot/input-slot';
+import { ValueSlot } from '../../../blocks/types';
 
 @Component({
   selector: 'app-block-instance',
@@ -19,6 +20,10 @@ export class BlockInstance {
 
     @Input()
     instance!: Instance
+
+    getOutputValue(outputId: string){
+        return this.graphService.getCachedValues(this.instance.id)?.[outputId];
+    }
 
     get block(){
         return this.graphService.getGraph().registry.get(this.instance.blockId)
@@ -61,6 +66,10 @@ export class BlockInstance {
         }
         
         return rows;
+    }
+
+    outputLabel(output: ValueSlot){
+        return output.displayName ?? output.id
     }
 
     onHandleGrab(event: PointerEvent){

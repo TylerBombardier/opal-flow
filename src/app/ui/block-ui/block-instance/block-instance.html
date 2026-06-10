@@ -60,9 +60,15 @@
             <div class="output-bar">
                 @for(output of block.outputs; track output.id){
                     <div class="row-output">
-                        <div class="label">
-                            {{ output.displayName ?? output.id }}
+                        <div>
+                            <div class="label">
+                                {{ outputLabel(output) }}
+                            </div>
+                            <div class="cached-value">
+                                {{ getOutputValue(output.id) }}
+                            </div>
                         </div>
+                        
                         <app-output-slot
                             [instanceId]="instance.id"
                             [outputId]="output.id"
