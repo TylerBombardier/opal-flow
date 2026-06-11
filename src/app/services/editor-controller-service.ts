@@ -264,7 +264,10 @@ export class EditorControllerService {
         graph.clearRuntime();
 
         try{
-            graph.run(instanceId)
+            const result = graph.run(instanceId);
+
+            console.log("Run result:", result);
+            console.log("Cache:", graph.cache);
         }catch(error){
             console.error(error)
         }

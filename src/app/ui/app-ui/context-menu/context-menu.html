@@ -3,10 +3,10 @@
     [style.left.px]="editorState.contextMenu.x"
     [style.top.px]="editorState.contextMenu.y"
 >
-    <button>
+    <button (pointerdown)="onRunPressed($event)">
         Run
     </button>
-    <button>
+    <button (pointerdown)="onDeletePressed($event)">
         Delete
     </button>
 </div>
