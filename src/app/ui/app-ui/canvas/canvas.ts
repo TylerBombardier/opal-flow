@@ -5,10 +5,11 @@ import Panzoom, { PanzoomOptions } from "@panzoom/panzoom";
 import { EditorStateService } from '../../../services/editor-state-service';
 import { EditorControllerService } from '../../../services/editor-controller-service';
 import { WireRenderer } from '../../wire-ui/wire-renderer/wire-renderer';
+import { ContextMenu } from '../context-menu/context-menu';
 
 @Component({
   selector: 'app-canvas',
-  imports: [BlockInstance],
+  imports: [BlockInstance,ContextMenu],
   templateUrl: './canvas.html',
   styleUrl: './canvas.scss',
 })

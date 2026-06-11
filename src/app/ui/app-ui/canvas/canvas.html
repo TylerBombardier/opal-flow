@@ -3,18 +3,7 @@
     [style.--grid-size.px]="editorState.gridSize"
 >
     @if(editorState.contextMenu.visible){
-        <div
-            class="context-menu"
-            [style.left.px]="editorState.contextMenu.x"
-            [style.top.px]="editorState.contextMenu.y"
-        >
-            <button>
-                Run
-            </button>
-            <button>
-                Delete
-            </button>
-        </div>
+        <app-context-menu></app-context-menu>
     }
     <div class="world" #world >
 
