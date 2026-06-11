@@ -37,6 +37,14 @@ export class EditorControllerService {
     }
 
     /**
+     * Global method, called every time the pointer is clicked down
+     * @param event 
+     */
+    onPointerDown(event: PointerEvent){
+        this.closeContextMenu()
+    }
+
+    /**
      * BLOCKS
      */
 
@@ -260,5 +268,18 @@ export class EditorControllerService {
         }catch(error){
             console.error(error)
         }
+    }
+
+    openContextMenu(event: PointerEvent, instanceId: string){
+        this.editorState.contextMenu = {
+            visible: true,
+            x: event.clientX,
+            y: event.clientY,
+            instanceId
+        }
+    }
+
+    closeContextMenu(){
+        this.editorState.contextMenu.visible = false;
     }
 }

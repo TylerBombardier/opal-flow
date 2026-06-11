@@ -76,6 +76,9 @@ export class Canvas implements AfterViewInit{
             'panzoomstart',
             () => {
                 this.isPanning = true;
+
+                this.editorController.closeContextMenu()
+
                 elem.style.cursor = "grabbing"
             }
         );
@@ -99,6 +102,11 @@ export class Canvas implements AfterViewInit{
     @HostListener('document:pointerup',['$event'])
     onPointerUp(event: PointerEvent){
         this.editorController.onPointerUp(event)
+    }
+
+    @HostListener('document:pointerdown',['$event'])
+    onPointerDown(event: PointerEvent){
+        this.editorController.onPointerDown(event)
     }
 
     // Returns all instances currently in the graph

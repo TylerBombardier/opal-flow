@@ -4,6 +4,7 @@
     [style.top.px]="instance.position.y"
     [style.z-index]="editorState.instanceZIndexs.get(instance.id) ?? 1"
     (pointerdown)="onFocus($event)"
+    (contextmenu)="onContextMenu($event)"
 >
     <div
         class="block-header"

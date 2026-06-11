@@ -74,11 +74,17 @@ export class BlockInstance {
 
     onHandleGrab(event: PointerEvent){
         event.stopPropagation()
+
+        this.editorController.closeContextMenu()
+
         this.editorController.onHandleGrab(this.instance, event)
     }
 
     onFocus(event: PointerEvent){
         event.stopPropagation()
+
+        this.editorController.closeContextMenu()
+
         this.editorController.bringInstanceToFront(this.instance.id)
     }
 
@@ -88,5 +94,15 @@ export class BlockInstance {
             return
         }
         this.editorController.deleteInstance(this.instance.id)
+    }
+
+    onContextMenu(event: PointerEvent){
+        event.stopPropagation()
+        event.preventDefault()
+
+        this.editorController.openContextMenu(
+            event,
+            this.instance.id
+        );
     }
 }

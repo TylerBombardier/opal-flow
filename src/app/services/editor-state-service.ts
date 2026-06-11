@@ -47,6 +47,15 @@ export class EditorStateService {
         inputId: string
     } | null = null;
 
+    contextMenu = {
+        visible: false,
+
+        x: 0,
+        y: 0,
+
+        instanceId: null as string | null
+    }
+
     viewportWidth = window.innerWidth;
     viewportHeight = window.innerHeight;
 
