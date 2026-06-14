@@ -34,6 +34,7 @@ export class Canvas implements AfterViewInit, OnInit{
 
     ngOnInit(): void {
         this.instances = this.graphService.getAllInstances();
+        this.wires = this.graphService.getAllWires();
 
         this.graphService.graphChanged.subscribe(()=> {
             this.instances = this.updateInstances()

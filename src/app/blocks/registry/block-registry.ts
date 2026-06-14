@@ -14,7 +14,7 @@ export class BlockRegistry {
         this.blocks.set(block.id, block)
     }
 
-    get(id: string){
+    get(id: string): Block{
         const block = this.blocks.get(id);
 
         if(!block){

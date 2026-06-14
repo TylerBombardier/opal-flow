@@ -7,8 +7,7 @@ import { ValueRow } from '../types/slot-row';
 import { ParamRenderer } from '../param-renderer/param-renderer';
 import { OutputSlot } from "../output-slot/output-slot";
 import { InputSlot } from '../input-slot/input-slot';
-import { ValueSlot } from '../../../blocks/types';
-import { Block } from '@angular/compiler';
+import { Block, ValueSlot } from '../../../blocks/types';
 
 @Component({
   selector: 'app-block-instance',
@@ -22,17 +21,16 @@ export class BlockInstance implements OnInit{
     @Input()
     instance!: Instance
 
+    block!: Block;
+
     outputValues: Record<string, any> = {}
 
     ngOnInit(): void {
+        this.block = this.graphService.getBlock(this.instance.blockId)
         this.rowInputs = this.buildRowInputs();
         this.graphService.graphRan.subscribe(()=>{
             this.outputValues = this.graphService.getCachedValues(this.instance.id) ?? {}
         })
-    }
-
-    get block(){
-        return this.graphService.getGraph().registry.get(this.instance.blockId)
     }
 
     rowInputs: ValueRow[] = []

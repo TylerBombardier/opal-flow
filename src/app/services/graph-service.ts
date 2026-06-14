@@ -50,6 +50,10 @@ export class GraphService {
         return this.getCache().get(instanceId);
     }
 
+    getBlock(blockId: string){
+        return this.getGraph().registry.get(blockId);
+    }
+
     getCache(){
         return this.graph.cache;
     }
