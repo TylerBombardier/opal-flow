@@ -29,6 +29,7 @@ export class BlockInstance implements OnInit{
         this.block = this.graphService.getBlock(this.instance.blockId)
         this.rowInputs = this.buildRowInputs();
         this.graphService.graphRan.subscribe(()=>{
+            console.log("Updated Output Value: ",this.instance.blockId)
             this.outputValues = this.graphService.getCachedValues(this.instance.id) ?? {}
         })
     }

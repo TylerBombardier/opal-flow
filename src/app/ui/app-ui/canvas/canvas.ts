@@ -37,6 +37,7 @@ export class Canvas implements AfterViewInit, OnInit{
         this.wires = this.graphService.getAllWires();
 
         this.graphService.graphChanged.subscribe(()=> {
+            console.log("Updated Canvas")
             this.instances = this.updateInstances()
             this.wires = this.updateWires()
         })
