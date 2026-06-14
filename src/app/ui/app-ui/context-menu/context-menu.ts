@@ -16,6 +16,8 @@ export class ContextMenu {
     }
 
     onRunPressed(event: PointerEvent){
+        console.log("Run button pressed")
+
         if(event.button != 0){
             event.stopPropagation()
             return;

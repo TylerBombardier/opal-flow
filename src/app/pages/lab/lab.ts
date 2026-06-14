@@ -20,7 +20,7 @@ export class Lab implements OnInit{
 
     ngOnInit() {
         // this.runTests();
-        this.stressTest();
+        // this.stressTest();
     }
     
     // Stress Testing Function

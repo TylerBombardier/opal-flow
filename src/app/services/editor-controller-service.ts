@@ -259,15 +259,13 @@ export class EditorControllerService {
     }
 
     runInstance(instanceId: string){
-        const graph = this.graphService.getGraph();
-
-        graph.clearRuntime();
+        console.log("Controller runInstance: ",instanceId)
 
         try{
-            const result = graph.run(instanceId);
+            const result = this.graphService.run(instanceId);
 
             console.log("Run result:", result);
-            console.log("Cache:", graph.cache);
+            console.log("Cache:", this.graphService.getCache());
         }catch(error){
             console.error(error)
         }

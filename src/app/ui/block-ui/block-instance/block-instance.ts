@@ -22,8 +22,13 @@ export class BlockInstance implements OnInit{
     @Input()
     instance!: Instance
 
+    outputValues: Record<string, any> = {}
+
     ngOnInit(): void {
         this.rowInputs = this.buildRowInputs();
+        this.graphService.graphRan.subscribe(()=>{
+            this.outputValues = this.graphService.getCachedValues(this.instance.id) ?? {}
+        })
     }
 
     get block(){
@@ -71,10 +76,6 @@ export class BlockInstance implements OnInit{
         }
         
         return rows;
-    }
-
-    getOutputValue(outputId: string){
-        return this.graphService.getCachedValues(this.instance.id)?.[outputId];
     }
 
     outputLabel(output: ValueSlot){

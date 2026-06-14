@@ -21,10 +21,17 @@ export class GraphService {
 
     graphChanged = new Subject<void>();
 
+    graphRan = new Subject<void>();
+
     run(instanceId: string){
         // Clears previous graph runtime information, and runs the graph.
         this.graph.clearRuntime();
-        return this.graph.run(instanceId);
+        
+        const result = this.graph.run(instanceId);
+
+        this.graphRan.next();
+
+        return result;
     }
 
     getAllInstances(){
