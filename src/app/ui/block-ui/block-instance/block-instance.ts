@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { GraphService } from '../../../services/graph-service';
 import { Instance } from '../../../graph/types';
 import { EditorStateService } from '../../../services/editor-state-service';
@@ -15,21 +15,25 @@ import { ValueSlot } from '../../../blocks/types';
   templateUrl: './block-instance.html',
   styleUrl: './block-instance.scss',
 })
-export class BlockInstance {
+export class BlockInstance implements OnInit{
     constructor(public graphService: GraphService, public editorState: EditorStateService, public editorController: EditorControllerService){}
 
     @Input()
     instance!: Instance
 
-    getOutputValue(outputId: string){
-        return this.graphService.getCachedValues(this.instance.id)?.[outputId];
+    ngOnInit(): void {
+        this.rowInputs = this.buildRowInputs();
     }
 
     get block(){
         return this.graphService.getGraph().registry.get(this.instance.blockId)
     }
 
-    get rowInputs(){
+    rowInputs: ValueRow[] = []
+
+    private buildRowInputs(): ValueRow[] {
+        // console.log("row inputs getter")
+
         const rows: ValueRow[] = []
 
         for (const param of this.block.params ?? []) {
@@ -66,6 +70,10 @@ export class BlockInstance {
         }
         
         return rows;
+    }
+
+    getOutputValue(outputId: string){
+        return this.graphService.getCachedValues(this.instance.id)?.[outputId];
     }
 
     outputLabel(output: ValueSlot){

@@ -112,11 +112,13 @@ export class Canvas implements AfterViewInit{
 
     // Returns all instances currently in the graph
     get instances(){
+        // console.log("instances getter")
         return this.graphService.getAllInstances();
     }
 
     // Returns all wires currently in the graph
     get wires(){
+        // console.log("wire getter")
         return this.graphService.getAllWires();
     }
 }
