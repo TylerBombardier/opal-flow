@@ -8,6 +8,7 @@ import { ParamRenderer } from '../param-renderer/param-renderer';
 import { OutputSlot } from "../output-slot/output-slot";
 import { InputSlot } from '../input-slot/input-slot';
 import { ValueSlot } from '../../../blocks/types';
+import { Block } from '@angular/compiler';
 
 @Component({
   selector: 'app-block-instance',

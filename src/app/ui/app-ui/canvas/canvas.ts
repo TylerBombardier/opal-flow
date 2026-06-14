@@ -6,6 +6,7 @@ import { EditorStateService } from '../../../services/editor-state-service';
 import { EditorControllerService } from '../../../services/editor-controller-service';
 import { WireRenderer } from '../../wire-ui/wire-renderer/wire-renderer';
 import { ContextMenu } from '../context-menu/context-menu';
+import { Instance, Wire } from '../../../graph/types';
 
 @Component({
   selector: 'app-canvas',
@@ -13,7 +14,7 @@ import { ContextMenu } from '../context-menu/context-menu';
   templateUrl: './canvas.html',
   styleUrl: './canvas.scss',
 })
-export class Canvas implements AfterViewInit{
+export class Canvas implements AfterViewInit, OnInit{
     constructor(
         public wireRenderer: WireRenderer, 
         public graphService: GraphService, 
@@ -27,6 +28,26 @@ export class Canvas implements AfterViewInit{
     // Keeps track if the user is panning or zooming
     isPanning = false;
     zooming = false;
+
+    instances: Instance[] = []
+    wires: Wire[] = []
+
+    ngOnInit(): void {
+        this.instances = this.graphService.getAllInstances();
+
+        this.graphService.graphChanged.subscribe(()=> {
+            this.instances = this.updateInstances()
+            this.wires = this.updateWires()
+        })
+    }
+
+    updateInstances(){
+        return this.graphService.getAllInstances();
+    }
+
+    updateWires(){
+        return this.graphService.getAllWires();
+    }
 
     ngAfterViewInit() {
         // The element that contains the transforming world
@@ -73,6 +94,7 @@ export class Canvas implements AfterViewInit{
         
         
         // Detects If the user is panning
+        
         elem.addEventListener(
             'panzoomstart',
             () => {
@@ -108,17 +130,5 @@ export class Canvas implements AfterViewInit{
     @HostListener('document:pointerdown',['$event'])
     onPointerDown(event: PointerEvent){
         this.editorController.onPointerDown(event)
-    }
-
-    // Returns all instances currently in the graph
-    get instances(){
-        // console.log("instances getter")
-        return this.graphService.getAllInstances();
-    }
-
-    // Returns all wires currently in the graph
-    get wires(){
-        // console.log("wire getter")
-        return this.graphService.getAllWires();
     }
 }

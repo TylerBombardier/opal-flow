@@ -4,6 +4,7 @@ import { registerBlocks, blockRegistry } from '../blocks/registry';
 import { SlotType } from '../blocks/types';
 import { canConnect, coerce, validateWire } from '../graph/rules';
 import { EditorStateService } from './editor-state-service';
+import { Subject } from 'rxjs';
 
 
 @Injectable({
@@ -18,6 +19,7 @@ export class GraphService {
         this.graph = new Graph(blockRegistry);
     }
 
+    graphChanged = new Subject<void>();
 
     run(instanceId: string){
         // Clears previous graph runtime information, and runs the graph.
@@ -101,6 +103,8 @@ export class GraphService {
             }
         });
 
+        this.graphChanged.next();
+    
         // Returns generated instance Id
         return id;
     }
@@ -175,6 +179,8 @@ export class GraphService {
             toInput
         });
 
+        this.graphChanged.next()
+
         this.graph.invalidateFrom(from)
     }
 
@@ -188,6 +194,8 @@ export class GraphService {
 
         console.log("Instance Deleted")
 
+        this.graphChanged.next()
+
         this.graph.invalidateFrom(id)
     }
 
@@ -196,6 +204,8 @@ export class GraphService {
         this.graph.wires = this.graph.wires.filter(
             w => !(w.from === from && w.to === to && w.toInput === toInput)
         );
+
+        this.graphChanged.next()
 
         this.graph.invalidateFrom(from)
     }
