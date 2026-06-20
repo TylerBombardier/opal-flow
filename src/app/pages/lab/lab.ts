@@ -49,6 +49,25 @@ export class Lab implements OnInit{
         }
     }
 
+    stressTestSpreadWithWires(){
+        const mainInstance = this.graphService.addInstance("text",{
+            position: {
+                x: 0,
+                y: 0
+            }
+        });
+
+        for(let i = 0; i < 300; i++) {
+            const otherInstance = this.graphService.addInstance("concat", {
+                position: {
+                    x: (i % 20) * 200,
+                    y: Math.floor(i / 20) * 100
+                }
+            });
+            this.graphService.addWire(mainInstance, "out", otherInstance, "text")
+        }
+    }
+
     /**
      *  Test Functions
      */
