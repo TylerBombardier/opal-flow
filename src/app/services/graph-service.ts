@@ -84,11 +84,11 @@ export class GraphService {
 
         const pos = options.position ?? this.editorState.viewportCenterWorld;
 
-        console.log('=== SPAWN DEBUG ===');
-        console.log('Transform:', this.editorState.transform);
-        console.log('Viewport size:', this.editorState.viewportWidth, this.editorState.viewportHeight);
-        console.log('Calculated center:', pos);
-        console.log('==================');
+        // console.log('=== SPAWN DEBUG ===');
+        // console.log('Transform:', this.editorState.transform);
+        // console.log('Viewport size:', this.editorState.viewportWidth, this.editorState.viewportHeight);
+        // console.log('Calculated center:', pos);
+        // console.log('==================');
 
         const finalParams: Record<string, any> = {};
 

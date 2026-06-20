@@ -20,7 +20,6 @@ export class Lab implements OnInit{
 
     ngOnInit() {
         // this.runTests();
-        this.stressTest();
     }
     
     // Stress Testing Function
@@ -36,6 +35,17 @@ export class Lab implements OnInit{
         for(let i = 0; i < 300; i++){
             const otherinstance = this.graphService.addInstance("concat")
             this.graphService.addWire(mainInstance, "out", otherinstance, "text")
+        }
+    }
+
+    stressTestSpread(){
+        for(let i = 0; i < 300; i++) {
+            this.graphService.addInstance("concat", {
+                position: {
+                    x: (i % 20) * 200,
+                    y: Math.floor(i / 20) * 100
+                }
+            });
         }
     }
 
