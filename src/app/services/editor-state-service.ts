@@ -90,11 +90,13 @@ export class EditorStateService {
         const screenX = this.viewportWidth / 2;
         const screenY = this.viewportHeight / 2;
 
-        return this.screenToWorld(screenX, screenY);
+        const center = this.screenToWorld(screenX, screenY)
+
+        return center
     }
 
     get screenToWorld() {
-        const t = this.transform;
+        const t = this.transform
 
         return (screenX: number, screenY: number) => ({
             x: (screenX - t.x) / t.scale,

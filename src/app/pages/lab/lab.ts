@@ -21,6 +21,29 @@ export class Lab implements OnInit{
     ngOnInit() {
         // this.runTests();
     }
+
+    spawnThreeInstances(){
+        const first = this.graphService.addInstance("text",{
+            position: {
+                x: 0,
+                y: 0
+            }
+        })
+
+        const second = this.graphService.addInstance("text",{
+            position: {
+                x: 1000,
+                y: 1000
+            }
+        })
+
+        const third = this.graphService.addInstance("text",{
+            position: {
+                x: 2000,
+                y: 2000
+            }
+        })
+    }
     
     // Stress Testing Function
 

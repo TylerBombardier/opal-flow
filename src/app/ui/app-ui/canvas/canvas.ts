@@ -69,11 +69,13 @@ export class Canvas implements AfterViewInit, OnInit{
 
         // Keeps track of panzoom state
         elem.addEventListener('panzoomchange', (event: any) => {
+            const pan = panzoom.getPan()
+
             this.editorState.transform = {
-                x: event.detail.x,
-                y: event.detail.y,
-                scale: event.detail.scale
-            };
+                x: pan.x,
+                y: pan.y,
+                scale: panzoom.getScale()
+            }
         });
 
         //Removed Feature. Zoom was giving me way too many complications.
