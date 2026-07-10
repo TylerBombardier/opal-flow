@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Graph } from '../graph/graph';
 import { registerBlocks, blockRegistry } from '../blocks/registry';
 import { SlotType } from '../blocks/types';
-import { canConnect, coerce, validateWire } from '../graph/rules';
+import { canConnect, canCreateWire, coerce, validateWire } from '../graph/rules';
 import { EditorStateService } from './editor-state-service';
 import { Subject } from 'rxjs';
 
@@ -141,41 +141,19 @@ export class GraphService {
             throw new Error(`Target instance not found: ${to}`);
         }
 
-        const sourceBlock = this.graph.registry.get(sourceInstance.blockId)!;
-        const targetBlock = this.graph.registry.get(targetInstance.blockId)!;
+        const sourceBlock = this.graph.registry.get(sourceInstance.blockId);
+        const targetBlock = this.graph.registry.get(targetInstance.blockId);
 
-        // Validate Slot Input/Output Exists
-        const inputSlot = targetBlock.inputs.find(
-            i => i.id === toInput
-        )
-
-        if (!inputSlot) {
-            throw new Error(`Invalid input '${toInput}' for block '${targetBlock.id}'`);
-        }
-
-        const outputSlot = sourceBlock.outputs.find(
-            o => o.id === fromOutput
-        )
-
-        if(!outputSlot){
-            throw new Error(
-                `Invalid input '${fromOutput}' for block '${sourceBlock.id}'`
-            );
-        }
-
-        if (from === to) {
-            throw new Error(
-                `Cannot connect node to itself`
-            );
-        }
-
-        validateWire(
+        const result = canCreateWire(
             sourceBlock,
             targetBlock,
             fromOutput,
             toInput
         )
 
+        if(!result.valid){
+            return result
+        }
 
         // Enforces one wire per InputSlot
         this.graph.wires = this.graph.wires.filter(
@@ -193,6 +171,10 @@ export class GraphService {
         this.graphChanged.next()
 
         this.graph.invalidateFrom(from)
+
+        return {
+            valid: true
+        }
     }
 
     removeInstance(id: string) {

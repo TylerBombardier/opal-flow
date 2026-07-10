@@ -185,6 +185,13 @@ export function canCreateWire(
         }
     }
 
+    if (sourceBlock === targetBlock) {
+        return {
+            valid: false,
+            msg: 'Cannot connect instance to itself'
+        }
+    }
+
     return {
         valid: true
     }

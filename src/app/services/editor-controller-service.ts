@@ -251,33 +251,18 @@ export class EditorControllerService {
             return;
         }
 
-        const sourceBlock = this.graphService.getBlock(
-            this.graphService.getInstance(drag.fromInstanceId)!.blockId
-        );
-
-        const targetBlock = this.graphService.getBlock(
-            this.graphService.getInstance(target.instanceId)!.blockId
-        );
-
-        const result = canCreateWire(
-            sourceBlock, 
-            targetBlock, 
-            drag.fromOutputId, 
-            target.inputId
-        )
-        
-        if(!result.valid){
-
-            // TODO: Add Toast
-
-            console.error(result.msg)
-        } else {
-            this.graphService.addWire(
+        const result = this.graphService.addWire(
                 drag.fromInstanceId,
                 drag.fromOutputId,
                 target.instanceId,
                 target.inputId
             )
+        
+        if(!result.valid){
+
+            // TODO: Add Toast Later
+
+            console.error(result.msg)
         }
         
 
