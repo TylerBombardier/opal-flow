@@ -143,6 +143,53 @@ export function validateOutputs(
 //     }
 // }
 
+export type WireValidationResult = {
+    valid: boolean,
+    msg?: string
+}
+
+export function canCreateWire(
+    sourceBlock: Block,
+    targetBlock: Block,
+    fromOutput: string,
+    toInput: string
+): WireValidationResult {
+    const outputSlot =
+        sourceBlock.outputs.find(
+            o => o.id === fromOutput
+        );
+
+    if (!outputSlot) {
+        return {
+            valid: false,
+            msg: "Output slot not found"
+        }
+    }
+
+    const inputSlot =
+        targetBlock.inputs.find(
+            i => i.id === toInput
+        );
+
+    if (!inputSlot) {
+        return {
+            valid: false,
+            msg: "Input slot not found"
+        }
+    }
+
+    if(!canConnect(outputSlot,inputSlot)){
+        return {
+            valid: false,
+            msg: `Type Mismatch: '${outputSlot.type}' -> '${inputSlot.type}' `
+        }
+    }
+
+    return {
+        valid: true
+    }
+}
+
 export function validateWire(
     sourceBlock: Block,
     targetBlock: Block,

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { GraphService } from './graph-service';
 import { EditorStateService } from './editor-state-service';
 import { Instance } from '../graph/types';
+import { canCreateWire } from '../graph/rules';
 
 @Injectable({
   providedIn: 'root',
@@ -244,7 +245,33 @@ export class EditorControllerService {
 
         const target = this.editorState.hoveredInputId;
 
-        if(drag && target){
+        if (!drag || !target) {
+            this.editorState.activeWireDrag = null;
+            this.editorState.clearHoveredInput();
+            return;
+        }
+
+        const sourceBlock = this.graphService.getBlock(
+            this.graphService.getInstance(drag.fromInstanceId)!.blockId
+        );
+
+        const targetBlock = this.graphService.getBlock(
+            this.graphService.getInstance(target.instanceId)!.blockId
+        );
+
+        const result = canCreateWire(
+            sourceBlock, 
+            targetBlock, 
+            drag.fromOutputId, 
+            target.inputId
+        )
+        
+        if(!result.valid){
+
+            // TODO: Add Toast
+
+            console.error(result.msg)
+        } else {
             this.graphService.addWire(
                 drag.fromInstanceId,
                 drag.fromOutputId,
@@ -252,6 +279,7 @@ export class EditorControllerService {
                 target.inputId
             )
         }
+        
 
         this.editorState.activeWireDrag = null;
         this.editorState.clearHoveredInput();
